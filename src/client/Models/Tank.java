@@ -1,4 +1,4 @@
-package Models;
+package client.Models;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -39,14 +39,19 @@ public class Tank {
 		this.y = y;
 		this.size = size;
 		this.health = health;
+		/*
 		img = new BufferedImage(size, size, BufferedImage.TYPE_INT_BGR);
 		if(whichImage) file = new File("tank01.jpg");
 		else file = new File("tank02.jpg");
+		*/
 	}
 	
-	public void draw(Graphics2D g) throws IOException {
+	public void draw(Graphics2D g2d) throws IOException {
+		/*
 		g = img.createGraphics();
 		ImageIO.write(img, "png", file);
+		*/
+		
 	}
 	
 	
