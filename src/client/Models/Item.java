@@ -24,3 +24,19 @@ class Wall extends Item{
 		c1 = (float) 0.9; c2 = (float) 0.9; c3 = (float) 0.9;
 	}
 }
+
+class mKit extends Item{
+
+	public mKit(float x, float y, float width, float height) {
+		super(x, y, width, height);
+		c1 = 0; c2 = 0; c3 = (float) 0.9;
+	}
+}
+
+class sKit extends Item{
+
+	public sKit(float x, float y, float width, float height) {
+		super(x, y, width, height);
+		c1 = 0; c2 = (float) 0.9; c3 = 0;
+	}
+}
