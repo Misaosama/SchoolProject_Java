@@ -9,11 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import javafx.scene.Node;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.ImagePattern;
-
-
+/*
 class testComponent extends JComponent{
 	public void paintComponent(Graphics g) {
 		Tank t = new Tank(0,0,50,50,true);
@@ -26,7 +22,7 @@ class testComponent extends JComponent{
 		}
 	}
 }
-
+*/
 public class Tank {
 	int health;
 	double x, y;
@@ -55,21 +51,6 @@ public class Tank {
 	}
 	
 	
-	
-	
-	
-	public static void main(String args[]) {
-		Tank t = new Tank(0,0,50,50,true);
-		
-		JFrame jf = new JFrame();
-		jf.setTitle("Test for gridPanel");
-		jf.setSize(1200,1200);
-		jf.setVisible(true);
-		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		Container contain = jf.getContentPane();
-		contain.add(new testComponent());
-	}
-	
+
 
 }

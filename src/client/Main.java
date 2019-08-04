@@ -2,6 +2,10 @@ package client;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +34,18 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
+		int[][] map = readFile(new File("docs/map3.txt")) ;
 		
+		if(map != null) {
+			for(int i = 0; i< map.length; i++) {
+				for(int j = 0; j< map[i].length; j++) {
+					System.out.print(map[i][j]);
+				}
+				System.out.println("");
+			}
+		}else {
+			System.out.println("Error");
+		}
 		
 		Main main = new Main();
 		main.initOpenGl();
@@ -50,7 +65,81 @@ public class Main {
 		}
 	}
 	
-	
+    /**
+     * construct and initialize a ROW row and COL columns GRID
+     * with all integer 0
+     * @param input_file the input file we are going to read
+     * @return return a string message of error or success
+     */
+    public static int[][] readFile(File input_file){
+    	int [][] map;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(input_file));
+            String size;
+            size = br.readLine();
+            int seperate = size.indexOf(',');
+            if(seperate<1) {
+                return null;
+            }
+            String row_st = size.substring(0, seperate);
+            String col_st = size.substring(seperate + 2);
+            //check if row_st is number
+            for (int i = row_st.length();--i>=0;){
+                if (!Character.isDigit(row_st.charAt(i))){
+                    return null;
+                }
+            }
+            //check if col_st is number
+            for (int i = col_st.length();--i>=0;){
+                if (!Character.isDigit(col_st.charAt(i))){
+                    return null;
+                }
+            }
+            int row = Integer.valueOf(row_st);
+            int col = Integer.valueOf(col_st);
+            if((row < 3)||(col < 3)) {
+                return null;
+            }
+            map = new int [row][col];
+            for(int i = 0; i < row; i++) {
+            	for(int j = 0; j < col; j++) {
+            		map[i][j] = 0;
+            	}
+            }
+            
+            //read the grid from file
+            String st;
+            for(int i = 0; i < row; i++) {
+                if ((st = br.readLine()) == null) {
+                    return null;
+                }
+                String[] this_line = new String[col];
+                this_line = st.split(",");
+                int[] temp = new int[this_line.length];
+                
+                for(int j = 0; j< this_line.length; j++) {
+                	this_line[j] = this_line[j].trim();
+                	try {
+                		if(Integer.valueOf(this_line[j])==0) {
+                			temp[j] = 0;
+                		}else {
+                			temp[j] = 1;
+                		}
+                	}catch(Exception e) {
+                		return null;
+                		
+                	}
+                }
+
+                map[i] = temp;
+            }
+            br.close();
+            
+        } catch (Exception e) {
+            return null;
+        }
+        return map;
+    }
 	
 	
 	/** Initializing OpenGL functions */
