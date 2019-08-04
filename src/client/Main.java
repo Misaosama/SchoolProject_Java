@@ -159,6 +159,46 @@ public class Main {
 		glEnd();
 	}
 	
+	
+	
+	
+	/**
+	 * Camera shows map regarding main character's position
+	 */
+	private class Camera {
+
+		private float x;
+		private float y;
+
+		private float xmov;
+		private float ymov;
+
+		Camera(float x, float y) {
+
+			this.x = x;
+			this.y = y;
+			xmov = 0;
+			ymov = 0;
+		}
+
+		private void update(Tank character) {
+
+			float xnew = character.x, ynew = character.y;
+			float xCam = Math.min(Math.max(0, (xnew + character.size / 2) - DISPLAY_WIDTH / 2),
+					MAP_WIDTH - DISPLAY_WIDTH);
+			float yCam = Math.min(Math.max(0, (ynew + character.size / 2) - DISPLAY_HEIGTH / 2),
+					MAP_HEIGTH - DISPLAY_HEIGTH);
+
+			xmov = xCam - x;
+			x = xCam;
+
+			ymov = yCam - y;
+			y = yCam;
+		}
+	}
+	
+	
+	
 	/**
      * construct and initialize a ROW row and COL columns GRID
      * with all integer 0
