@@ -29,7 +29,7 @@ class mKit extends Item{
 
 	public mKit(float x, float y, float width, float height) {
 		super(x, y, width, height);
-		c1 = 0; c2 = 0; c3 = (float) 0.9;
+		c1 = 1; c2 = 0; c3 = 0;
 	}
 }
 

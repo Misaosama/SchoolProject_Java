@@ -27,14 +27,18 @@ public class Main {
 	private static final int MAP_HEIGTH = 900;
 
 	private static final int FRAMES_PER_SECOND = 30;
+	
+	
 
 	static long ID = -1; // we get ID from the server side
 	
-	private List<Item> items;
+	private List<Item> walls;
+	private List<Item> kits;
+	private int[][] map;
 	
 	public static void main(String[] args) {
-		
-		int[][] map = readFile(new File("docs/map3.txt")) ;
+		/*
+		int[][] map = readFile(new File("docs/map2.txt")) ;
 		
 		if(map != null) {
 			for(int i = 0; i< map.length; i++) {
@@ -46,6 +50,8 @@ public class Main {
 		}else {
 			System.out.println("Error");
 		}
+		*/
+		
 		
 		Main main = new Main();
 		main.initOpenGl();
@@ -54,18 +60,106 @@ public class Main {
 	}
 
 	public Main(){
+		map = readFile(new File("docs/map2.txt")) ;
 		generateItems();
 	}
 	
 	// use this function to create the walls
 	private void generateItems() {
-		items = new ArrayList<Item>();
-		for(int i=0;i<10;i++) {
-			items.add(ItemFactory.createItem(0,20*i,20*i,20,20));
+		
+		int WALL_SIZE=20;
+		
+		walls = new ArrayList<Item>();
+		for(int i=0;i<map.length;i++) {
+			for(int j=0;j<map[0].length;j++) {
+				if(map[i][j]==1) {
+					walls.add(ItemFactory.createItem(1, WALL_SIZE*j, WALL_SIZE*i,
+							WALL_SIZE, WALL_SIZE));
+				}
+			}
+		}
+		
+		kits = new ArrayList<Item>();
+		for(int i=0;i<map.length;i++) {
+			for(int j=0;j<map[0].length;j++) {
+				if(map[i][j]==2||map[i][j]==3) {
+					kits.add(ItemFactory.createItem(map[i][j], 
+							WALL_SIZE*j, WALL_SIZE*i,
+							WALL_SIZE, WALL_SIZE));
+				}
+			}
 		}
 	}
 	
-    /**
+    
+	
+	
+	/** Initializing OpenGL functions */
+	private void initOpenGl() {
+
+		try {
+			Display.setDisplayMode(new DisplayMode(DISPLAY_WIDTH, DISPLAY_HEIGTH));
+			Display.setResizable(true);
+			Display.create();
+
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, DISPLAY_WIDTH, DISPLAY_HEIGTH, 0, 1, -1);
+		glMatrixMode(GL_MODELVIEW);
+	}
+	
+	/** Game loop */
+	private void start() {
+
+		while (!Display.isCloseRequested()) {
+
+			glClear(GL_COLOR_BUFFER_BIT);
+
+			/*
+			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+				closingOperations();
+			}
+
+			handlingEvents();
+			sendCharacter();
+			update();
+			*/
+			render();
+			
+
+			Display.update();
+			Display.sync(FRAMES_PER_SECOND);
+		}
+		//closingOperations();
+	}
+	
+	/** Rendering obstacles, players and bullets */
+	private void render() {
+		for(Item w : walls) {
+			drawItem(w);
+		}
+		
+		for(Item k : kits) {
+			drawItem(k);
+		}
+
+		
+	}
+	
+	public void drawItem(Item wall) {
+		glColor3f(wall.c1, wall.c2, wall.c3);
+		glBegin(GL_QUADS);
+			glVertex2f(wall.x, wall.y);
+			glVertex2f(wall.x + wall.w, wall.y);
+			glVertex2f(wall.x + wall.w, wall.y + wall.h);
+			glVertex2f(wall.x, wall.y + wall.h);
+		glEnd();
+	}
+	
+	/**
      * construct and initialize a ROW row and COL columns GRID
      * with all integer 0
      * @param input_file the input file we are going to read
@@ -122,8 +216,16 @@ public class Main {
                 	try {
                 		if(Integer.valueOf(this_line[j])==0) {
                 			temp[j] = 0;
-                		}else {
+                		}else if(Integer.valueOf(this_line[j])==1) {
                 			temp[j] = 1;
+                		}else if(Integer.valueOf(this_line[j])==2) {
+                			temp[j] = 2;
+                		}else if(Integer.valueOf(this_line[j])==3) {
+                			temp[j] = 3;
+                		}else if(Integer.valueOf(this_line[j])==4) {
+                			temp[j] = 4;
+                		}else if(Integer.valueOf(this_line[j])==5) {
+                			temp[j] = 5;
                 		}
                 	}catch(Exception e) {
                 		return null;
@@ -140,67 +242,5 @@ public class Main {
         }
         return map;
     }
-	
-	
-	/** Initializing OpenGL functions */
-	private void initOpenGl() {
-
-		try {
-			Display.setDisplayMode(new DisplayMode(DISPLAY_WIDTH, DISPLAY_HEIGTH));
-			Display.setResizable(true);
-			Display.create();
-
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-		}
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, DISPLAY_WIDTH, DISPLAY_HEIGTH, 0, 1, -1);
-		glMatrixMode(GL_MODELVIEW);
-	}
-	
-	/** Game loop */
-	private void start() {
-
-		while (!Display.isCloseRequested()) {
-
-			glClear(GL_COLOR_BUFFER_BIT);
-
-			/*
-			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-				closingOperations();
-			}
-
-			handlingEvents();
-			sendCharacter();
-			update();
-			*/
-			render();
-			
-
-			Display.update();
-			Display.sync(FRAMES_PER_SECOND);
-		}
-		//closingOperations();
-	}
-	
-	/** Rendering obstacles, players and bullets */
-	private void render() {
-		for(Item w : items) {
-			drawWall(w);
-		}
-
-		
-	}
-	
-	public void drawWall(Item wall) {
-		glColor3f(wall.c1, wall.c2, wall.c3);
-		glBegin(GL_QUADS);
-			glVertex2f(wall.x, wall.y);
-			glVertex2f(wall.x + wall.w, wall.y);
-			glVertex2f(wall.x + wall.w, wall.y + wall.h);
-			glVertex2f(wall.x, wall.y + wall.h);
-		glEnd();
-	}
 
 }
