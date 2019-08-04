@@ -12,6 +12,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 import client.Models.Tank;
+import client.Models.Item;
+import client.Models.ItemFactory;
 
 public class Main {
 	private static final int DISPLAY_WIDTH = 700;
@@ -24,6 +26,8 @@ public class Main {
 
 	static long ID = -1; // we get ID from the server side
 	
+	private List<Item> items;
+	
 	public static void main(String[] args) {
 		
 		
@@ -35,7 +39,15 @@ public class Main {
 	}
 
 	public Main(){
-		
+		generateItems();
+	}
+	
+	// use this function to create the walls
+	private void generateItems() {
+		items = new ArrayList<Item>();
+		for(int i=0;i<10;i++) {
+			items.add(ItemFactory.createItem(0,20*i,20*i,20,20));
+		}
 	}
 	
 	
@@ -73,13 +85,33 @@ public class Main {
 			handlingEvents();
 			sendCharacter();
 			update();
-			render();
 			*/
+			render();
+			
 
 			Display.update();
 			Display.sync(FRAMES_PER_SECOND);
 		}
 		//closingOperations();
+	}
+	
+	/** Rendering obstacles, players and bullets */
+	private void render() {
+		for(Item w : items) {
+			drawWall(w);
+		}
+
+		
+	}
+	
+	public void drawWall(Item wall) {
+		glColor3f(wall.c1, wall.c2, wall.c3);
+		glBegin(GL_QUADS);
+			glVertex2f(wall.x, wall.y);
+			glVertex2f(wall.x + wall.w, wall.y);
+			glVertex2f(wall.x + wall.w, wall.y + wall.h);
+			glVertex2f(wall.x, wall.y + wall.h);
+		glEnd();
 	}
 
 }
