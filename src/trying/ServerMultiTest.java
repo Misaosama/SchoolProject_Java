@@ -34,7 +34,7 @@ public class ServerMultiTest {
 //					Movings = new BoxContainer();
 //					Movings.becomeThisBC( m );
 //					Movings.addBox( new Box((float)80.0, (float)80.0, 13,30, (float)100.0, (float)100.0, (float)1.0, (long)123, 0 )); 
-					tcpS.send(Movings);
+//					tcpS.send(Movings);
 				}
 			}
 			
@@ -62,11 +62,11 @@ class ServerTCPConnectionHandler implements Runnable{
 //		try {
 //			this.connection_.connect();
 		try {
-//			while(true) {
+			while(true) {
 				System.out.println(allMovings_.boxes_.get(0).y);
 				this.connection_.send(allMovings_);
 				
-//			}
+			}
 		}catch(java.net.SocketException e) {
 			return;
 		}
