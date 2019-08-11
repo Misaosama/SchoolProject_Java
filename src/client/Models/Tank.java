@@ -43,6 +43,14 @@ public class Tank extends movingBox {
 		
 	}
 	
+	public float getx() {
+		return box.x;
+	}
+	
+	public float gety() {
+		return box.y;
+	}
+	
 
 	
 

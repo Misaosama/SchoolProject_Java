@@ -47,4 +47,12 @@ class movingItem extends Item{
 		super(x, y, width, height);
 		this.c1 = c1; this.c2 = c2; this.c3 = c3;
 	}
+	
+	public float getx() {
+		return x;
+	}
+	
+	public float gety() {
+		return x;
+	}
 }

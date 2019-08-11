@@ -184,6 +184,10 @@ public class Main {
 		}
 		
 		drawItem(tank.box);
+		
+		for(Bullet b : bullets) {
+			drawItem(b.box);
+		}
 
 		
 	}
@@ -208,26 +212,27 @@ public class Main {
 		if (Display.isActive()) { // if display is focused events are handled
 			
 			// new bullets shot
-			/*
+			
 			while (Mouse.next()) {
 				
-				if (Mouse.getEventButtonState() && updatedCharacter != null) {	
+				if (Mouse.getEventButtonState() && tank.box != null) {	
 
 					float xmouse = Mouse.getX() + camera.x;
 					float ymouse = DISPLAY_HEIGTH - Mouse.getY() + camera.y;
-					float pnx = 1;
-					float xmain = updatedCharacter.x + updatedCharacter.w / 2;
-					float ymain = updatedCharacter.y + updatedCharacter.h / 2;
+					float xmain = tank.getx() + tank.size / 2;
+					float ymain = tank.gety() + tank.size / 2;
 					float k = (ymain - ymouse) / (xmain - xmouse);
-					float c = ymain - k * xmain;
+					float dx = (float) Math.sqrt(SPEED*SPEED /(1+k*k));
+					if(xmouse<xmain) dx=-dx;
+					float dy = k*dx;
+					
+					float size = 5;
 
-					if (xmouse > xmain) {
-						pnx = -1;
-					}
-					bullets.add(new Bullet(xmain, ymain, k, c, pnx));
+					
+					bullets.add(new Bullet(xmain, ymain, dx,dy, size));
 				}
 			}
-			*/
+			
 			
 			// character's moves
 			while (Keyboard.next()) {

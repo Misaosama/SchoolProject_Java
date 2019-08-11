@@ -1,6 +1,7 @@
 package client.Models;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Simulator {
@@ -49,6 +50,21 @@ public class Simulator {
 			tank.box.y -= tank.dy;
 
 		}
+		
+		//check for bullet 
+		Iterator<Bullet> itr = bullets.iterator();
+		while (itr.hasNext()) {
+			Bullet b = itr.next();
+			b.box.x+=b.dx;
+			b.box.y+=b.dy;
+			
+			if(b.box.x<0 || b.box.x>MAP_WIDTH) itr.remove();
+			if(b.box.y<0 || b.box.y>MAP_HEIGTH) itr.remove();
+			
+			int r = (int)((b.box.y)/b.size);
+			
+		}
+		
 		
 		
 	}
