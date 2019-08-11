@@ -37,7 +37,21 @@ public class Box implements java.io.Serializable {
 		this.xp = xp;
 	}
 	public void  moveDown() {
-		this.y += 20.0;
+		this.y += 10.0;
+	}
+	
+	public void becomeBox(Box b1) {
+		this.r = b1.r;
+		this.b = b1.b;
+		this.g = b1.g;
+
+		this.x = b1.x;
+		this.y = b1.y;
+		this.w = b1.w;
+		this.h = b1.h;
+		
+		this.id= b1.id;
+		this.xp = b1.xp;
 	}
 	
 	
