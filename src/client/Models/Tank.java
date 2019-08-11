@@ -23,6 +23,7 @@ public class Tank extends movingBox {
 	
 	private File file;
 	private BufferedImage img;
+	private int maxHealth;
 	
 	public Tank(float x, float y, int size, int health, boolean whichImage) {
 		super(x,y);
@@ -30,6 +31,7 @@ public class Tank extends movingBox {
 		this.y = y;
 		this.size = size;
 		this.health = health;
+		this.maxHealth = health;
 		newBullets = new ArrayList<Bullet>();
 		if(whichImage) {
 			box = new movingItem(x,y,(float)size,(float)size,
@@ -49,6 +51,10 @@ public class Tank extends movingBox {
 	
 	public float gety() {
 		return box.y;
+	}
+	
+	public void healthKit(){
+		health = maxHealth;
 	}
 	
 
