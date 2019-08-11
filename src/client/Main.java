@@ -54,14 +54,18 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Main main = new Main();
-		main.initOpenGl();
-		main.init();
-		main.start();
+		main.StartGame();
 	}
 
 	public Main(){
 		map = readFile(new File("docs/map2.txt")) ;
 		generateItems();
+	}
+	
+	public void StartGame() {
+		initOpenGl();
+		init();
+		start();
 	}
 	
 	// use this function to create the walls
@@ -222,7 +226,7 @@ public class Main {
 					float xmain = tank.getx() + tank.size / 2;
 					float ymain = tank.gety() + tank.size / 2;
 					float k = (ymain - ymouse) / (xmain - xmouse);
-					float dx = (float) Math.sqrt(SPEED*SPEED /(1+k*k));
+					float dx = (float) Math.sqrt(4*SPEED*SPEED /(1+k*k));
 					if(xmouse<xmain) dx=-dx;
 					float dy = k*dx;
 					
