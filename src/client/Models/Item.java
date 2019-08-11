@@ -40,3 +40,11 @@ class sKit extends Item{
 		c1 = 0; c2 = (float) 0.9; c3 = 0;
 	}
 }
+
+class movingItem extends Item{
+	public movingItem(float x, float y, float width, float height
+			,float c1, float c2, float c3) {
+		super(x, y, width, height);
+		this.c1 = c1; this.c2 = c2; this.c3 = c3;
+	}
+}

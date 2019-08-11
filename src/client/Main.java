@@ -20,30 +20,36 @@ import client.Models.movingBox;
 import client.Models.Bullet;
 import client.Models.Item;
 import client.Models.ItemFactory;
+import client.Models.Simulator;
 
 public class Main {
 	private static final int DISPLAY_WIDTH = 700;
 	private static final int DISPLAY_HEIGTH = 500;
 
-	private static final int MAP_WIDTH = 1500;
-	private static final int MAP_HEIGTH = 900;
+	private static final int MAP_WIDTH = 2000;
+	private static final int MAP_HEIGTH = 2000;
 
 	private static final int FRAMES_PER_SECOND = 30;
 	
 	private static final int WALL_SIZE = 20;
-	private static final int TANK_SIZE = 5;
+	private static final int TANK_SIZE = 15;
+	
+	private static final int SPEED = 8;
 	
 	
 
 	static long ID = -1; // we get ID from the server side
 	
-	private List<Item> walls;
-	private List<Item> kits;
+	private ArrayList<Item> walls;
+	private ArrayList<Item> kits;
 	private int[][] map;
 	
 	private Camera camera;
 	private Tank tank;
+	
 	private ArrayList<Bullet> bullets;
+	
+	private Simulator sim;
 	
 	public static void main(String[] args) {
 		
@@ -60,9 +66,7 @@ public class Main {
 	
 	// use this function to create the walls
 	private void generateItems() {
-		
-		
-		
+
 		walls = new ArrayList<Item>();
 		for(int i=0;i<map.length;i++) {
 			for(int j=0;j<map[0].length;j++) {
@@ -83,6 +87,10 @@ public class Main {
 				}
 			}
 		}
+
+		
+		
+		
 	}
 	
     
@@ -116,9 +124,10 @@ public class Main {
 		
 //		obstacles = connections.getMapDetails();
 
-		tank = new Tank(0,WALL_SIZE,TANK_SIZE,TANK_SIZE,true);
+		tank = new Tank(3*WALL_SIZE,WALL_SIZE,TANK_SIZE,TANK_SIZE,true);
 		bullets = new ArrayList<Bullet>();
 		camera = new Camera(0, 0);
+		sim = new Simulator(tank, map, bullets);
 		ArrayList<movingBox> movingObjects = new ArrayList<movingBox>();
 
 //		new Thread(new UdpConnection(this, connections, client_port_udp)).start();
@@ -135,11 +144,11 @@ public class Main {
 			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				closingOperations();
 			}
-
-			handlingEvents();
-			sendCharacter();
-			update();
 			*/
+			handlingEvents();
+			//sendCharacter();
+			sim.update();
+			update();
 			render();
 			
 
@@ -149,8 +158,23 @@ public class Main {
 		//closingOperations();
 	}
 	
+	
+	/** Updating camera's position */
+	private void update() {
+
+		if (tank.box != null) {
+			camera.update(tank.box);
+		}
+	}
+	
+	
+	
+	
 	/** Rendering obstacles, players and bullets */
 	private void render() {
+		
+		glTranslatef(-camera.xmov, -camera.ymov, 0);	//camera's position
+		
 		for(Item w : walls) {
 			drawItem(w);
 		}
@@ -158,6 +182,8 @@ public class Main {
 		for(Item k : kits) {
 			drawItem(k);
 		}
+		
+		drawItem(tank.box);
 
 		
 	}
@@ -170,6 +196,95 @@ public class Main {
 			glVertex2f(wall.x + wall.w, wall.y + wall.h);
 			glVertex2f(wall.x, wall.y + wall.h);
 		glEnd();
+	}
+	
+	private boolean up = false;
+	private boolean down = false;
+	private boolean right = false;
+	private boolean left = false;
+
+	private void handlingEvents() {
+
+		if (Display.isActive()) { // if display is focused events are handled
+			
+			// new bullets shot
+			/*
+			while (Mouse.next()) {
+				
+				if (Mouse.getEventButtonState() && updatedCharacter != null) {	
+
+					float xmouse = Mouse.getX() + camera.x;
+					float ymouse = DISPLAY_HEIGTH - Mouse.getY() + camera.y;
+					float pnx = 1;
+					float xmain = updatedCharacter.x + updatedCharacter.w / 2;
+					float ymain = updatedCharacter.y + updatedCharacter.h / 2;
+					float k = (ymain - ymouse) / (xmain - xmouse);
+					float c = ymain - k * xmain;
+
+					if (xmouse > xmain) {
+						pnx = -1;
+					}
+					bullets.add(new Bullet(xmain, ymain, k, c, pnx));
+				}
+			}
+			*/
+			
+			// character's moves
+			while (Keyboard.next()) {
+
+				if (Keyboard.getEventKey() == Keyboard.KEY_W
+						|| Keyboard.getEventKey() == Keyboard.KEY_UP) {
+					if (Keyboard.getEventKeyState()) {
+						tank.dy = -SPEED;
+						up = true;
+					} else {
+						up = false;
+						if (!down) {
+							tank.dy = 0;
+						}
+					}
+				}
+				if (Keyboard.getEventKey() == Keyboard.KEY_S
+						|| Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
+					if (Keyboard.getEventKeyState()) {
+						tank.dy = SPEED;
+						down = true;
+					} else {
+						down = false;
+						if (!up) {
+							tank.dy = 0;
+						}
+					}
+				}
+				if (Keyboard.getEventKey() == Keyboard.KEY_D
+						|| Keyboard.getEventKey() == Keyboard.KEY_RIGHT) {
+					if (Keyboard.getEventKeyState()) {
+						tank.dx = SPEED;
+						right = true;
+					} else {
+						right = false;
+						if (!left) {
+							tank.dx = 0;
+						}
+					}
+				}
+				if (Keyboard.getEventKey() == Keyboard.KEY_A
+						|| Keyboard.getEventKey() == Keyboard.KEY_LEFT) {
+					if (Keyboard.getEventKeyState()) {
+						tank.dx = -SPEED;
+						left = true;
+					} else {
+						left = false;
+						if (!right) {
+							tank.dx = 0;
+						}
+					}
+				}
+			}
+		} else {
+			tank.dx = 0;
+			tank.dy = 0;
+		}
 	}
 	
 	
@@ -194,12 +309,12 @@ public class Main {
 			ymov = 0;
 		}
 
-		private void update(Tank character) {
+		private void update(Item character) {
 
 			float xnew = character.x, ynew = character.y;
-			float xCam = Math.min(Math.max(0, (xnew + character.size / 2) - DISPLAY_WIDTH / 2),
+			float xCam = Math.min(Math.max(0, (xnew + character.w / 2) - DISPLAY_WIDTH / 2),
 					MAP_WIDTH - DISPLAY_WIDTH);
-			float yCam = Math.min(Math.max(0, (ynew + character.size / 2) - DISPLAY_HEIGTH / 2),
+			float yCam = Math.min(Math.max(0, (ynew + character.w / 2) - DISPLAY_HEIGTH / 2),
 					MAP_HEIGTH - DISPLAY_HEIGTH);
 
 			xmov = xCam - x;
