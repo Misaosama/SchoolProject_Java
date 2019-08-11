@@ -9,17 +9,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Bullet extends movingBox{
-	public float k;
-	public float c;
-	public float pn;
+	public float dx;
+	public float dy;
+	public float size;
+
 	
+	public movingItem box;
 	
-	public Bullet(float x, float y, float k, float c, float pn){
+	public Bullet(float x, float y, float dx, float dy, float size){
 		super(x,y);
 		this.x = x;
 		this.y = y;
-		this.k = k;
-		this.c = c;
-		this.pn = pn;
+		this.dx = dx;
+		this.dy = dy;
+		this.size = size;
+		box = new movingItem(x,y,(float)size,(float)size,
+				(float)0,(float)1,(float)1);
 	}
 }
