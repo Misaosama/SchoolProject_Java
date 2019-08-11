@@ -16,6 +16,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 import client.Models.Tank;
+import client.Models.movingBox;
+import client.Models.Bullet;
 import client.Models.Item;
 import client.Models.ItemFactory;
 
@@ -28,6 +30,9 @@ public class Main {
 
 	private static final int FRAMES_PER_SECOND = 30;
 	
+	private static final int WALL_SIZE = 20;
+	private static final int TANK_SIZE = 5;
+	
 	
 
 	static long ID = -1; // we get ID from the server side
@@ -36,26 +41,15 @@ public class Main {
 	private List<Item> kits;
 	private int[][] map;
 	
+	private Camera camera;
+	private Tank tank;
+	private ArrayList<Bullet> bullets;
+	
 	public static void main(String[] args) {
-		/*
-		int[][] map = readFile(new File("docs/map2.txt")) ;
-		
-		if(map != null) {
-			for(int i = 0; i< map.length; i++) {
-				for(int j = 0; j< map[i].length; j++) {
-					System.out.print(map[i][j]);
-				}
-				System.out.println("");
-			}
-		}else {
-			System.out.println("Error");
-		}
-		*/
-		
 		
 		Main main = new Main();
 		main.initOpenGl();
-		//main.init();
+		main.init();
 		main.start();
 	}
 
@@ -67,7 +61,7 @@ public class Main {
 	// use this function to create the walls
 	private void generateItems() {
 		
-		int WALL_SIZE=20;
+		
 		
 		walls = new ArrayList<Item>();
 		for(int i=0;i<map.length;i++) {
@@ -109,6 +103,25 @@ public class Main {
 		glLoadIdentity();
 		glOrtho(0, DISPLAY_WIDTH, DISPLAY_HEIGTH, 0, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
+	}
+	
+	/** Setting up screen, establishing connections (TCP, UPD) with server, etc. */
+	private void init() {
+
+//		connections = new TcpConnection(this, server_ip, server_port_tcp);
+//
+//		if ((ID = connections.getIdFromServer()) == -1) {
+//			System.err.println("cant get id for char");
+//		}
+		
+//		obstacles = connections.getMapDetails();
+
+		tank = new Tank(0,WALL_SIZE,TANK_SIZE,TANK_SIZE,true);
+		bullets = new ArrayList<Bullet>();
+		camera = new Camera(0, 0);
+		ArrayList<movingBox> movingObjects = new ArrayList<movingBox>();
+
+//		new Thread(new UdpConnection(this, connections, client_port_udp)).start();
 	}
 	
 	/** Game loop */
@@ -196,6 +209,8 @@ public class Main {
 			y = yCam;
 		}
 	}
+	
+	
 	
 	
 	

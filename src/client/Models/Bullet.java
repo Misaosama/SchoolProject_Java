@@ -9,9 +9,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Bullet extends movingBox{
-	
-	public float x;
-	public float y;
 	public float k;
 	public float c;
 	public float pn;

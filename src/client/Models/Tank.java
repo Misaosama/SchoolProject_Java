@@ -14,7 +14,7 @@ import javax.swing.*;
 
 public class Tank extends movingBox {
 	public int health;
-	public float x, y;
+	//public float x, y, dx, dy;
 	public int size;
 	
 	public List<Bullet> newBullets;
