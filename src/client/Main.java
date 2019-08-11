@@ -66,7 +66,7 @@ public class Main {
 		initOpenGl();
 		init();
 		start();
-		//test
+		
 	}
 	
 	// use this function to create the walls
