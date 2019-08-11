@@ -61,7 +61,21 @@ public class Simulator {
 			if(b.box.x<0 || b.box.x>MAP_WIDTH) itr.remove();
 			if(b.box.y<0 || b.box.y>MAP_HEIGTH) itr.remove();
 			
-			int r = (int)((b.box.y)/b.size);
+			int r = (int)((b.box.y)/WALL_SIZE);
+			int c = (int)((b.box.x)/WALL_SIZE);
+			int r2 = (int)((b.box.y+b.size)/WALL_SIZE);
+			int c2 = (int)((b.box.x+b.size)/WALL_SIZE);
+			
+			if(r2 > maxRow || c2 > maxRow) {
+				if(r2>maxRow+2||c2>maxCol+3) {
+					itr.remove();
+				}
+			} else if(map[r][c]==1 || map[r2][c]==1 ||
+			          map[r][c2]==1 || map[r2][c2]==1) {
+				itr.remove();
+
+			}
+			
 			
 		}
 		
