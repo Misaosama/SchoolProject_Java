@@ -1,6 +1,8 @@
 package trying;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 import Connect.ServerTCPConnection;
 import View.Box;
 
@@ -25,16 +27,11 @@ public class ServerMultiTest {
 			
 			while(true) {
 				int clientResponse = tcpS.receive();
-				System.out.println("Received");
+//				System.out.println("Received");
 				if( clientResponse == 1 ) {
 					Movings.boxes_.get(0).moveDown();
-//					System.out.println(Movings.boxes_.get(0).y);
-//					a.moveDown();
-//					BoxContainer m = Movings;
-//					Movings = new BoxContainer();
-//					Movings.becomeThisBC( m );
-//					Movings.addBox( new Box((float)80.0, (float)80.0, 13,30, (float)100.0, (float)100.0, (float)1.0, (long)123, 0 )); 
 //					tcpS.send(Movings);
+//					int re = tcpS.receive();
 				}
 			}
 			
@@ -63,11 +60,12 @@ class ServerTCPConnectionHandler implements Runnable{
 //			this.connection_.connect();
 		try {
 			while(true) {
-				System.out.println(allMovings_.boxes_.get(0).y);
+//				System.out.println(allMovings_.boxes_.get(0).y);
 				this.connection_.send(allMovings_);
-				
+				int r = this.connection_.receive();
+//				TimeUnit.MILLISECONDS.sleep(30);
 			}
-		}catch(java.net.SocketException e) {
+		}catch(IOException e) {
 			return;
 		}
 		

@@ -49,7 +49,7 @@ import java.io.IOException;
 			return signal;
 		}
 		
-		public void send(BoxContainer Movings) throws java.net.SocketException {
+		public void send(BoxContainer Movings){
 			
 			try {
 				this.output.writeObject(Movings);

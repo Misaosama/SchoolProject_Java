@@ -155,11 +155,12 @@ class ClientTCPConnectionHandler implements Runnable{
 			this.connection_.connect();
 			while(true) {
 				BoxContainer receivedMovings = this.connection_.receive();
+				this.connection_.send(-1);
 //				synchronized(allMovingsReceived_) {
 //					this.allMovingsReceived_.becomeThisBC(receivedMovings); 
 //				}
 				this.cmt_.clientMovings_ = receivedMovings;
-				System.out.println(receivedMovings.nofBoxes_);
+//				System.out.println(receivedMovings.nofBoxes_);
 				
 			}
 			
