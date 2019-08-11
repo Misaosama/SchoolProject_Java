@@ -12,7 +12,7 @@ import javax.swing.*;
 
 
 
-public class Tank {
+public class Tank extends movingBox {
 	public int health;
 	public float x, y;
 	public int size;
@@ -23,6 +23,7 @@ public class Tank {
 	private BufferedImage img;
 	
 	public Tank(float x, float y, int size, int health, boolean whichImage) {
+		super(x,y);
 		this.x = x;
 		this.y = y;
 		this.size = size;
