@@ -124,7 +124,10 @@ public class Welcome extends JFrame{
  
         		single_player_bu.setEnabled(false);
         		multi_player_bu.setEnabled(false);
-            	
+        		setting_bu.setEnabled(false);
+        		help_bu.setEnabled(false);
+        		exit_bu.setEnabled(false);
+        		
         		
 				Thread t = new Thread(new Runnable() {
 					public void run() {
@@ -132,6 +135,9 @@ public class Welcome extends JFrame{
 		        		main.StartGame(); 
 		        		single_player_bu.setEnabled(true);
 		        		multi_player_bu.setEnabled(true);
+		        		setting_bu.setEnabled(true);
+		        		help_bu.setEnabled(true);
+		        		exit_bu.setEnabled(true);
 					}
 				});
 				t.start();
