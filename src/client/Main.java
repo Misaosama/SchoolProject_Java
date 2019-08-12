@@ -162,6 +162,7 @@ public class Main {
 			Display.sync(FRAMES_PER_SECOND);
 		}
 		//closingOperations();
+		Display.destroy();
 	}
 	
 	
