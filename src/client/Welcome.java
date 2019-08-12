@@ -123,11 +123,12 @@ public class Welcome extends JFrame{
             public void actionPerformed(ActionEvent e) {
             	
         		Main main = new Main();
-        		single_player_bu.setEnabled(false);
-        		multi_player_bu.setEnabled(false);
+        		single_player_bu.setVisible(false);
+        		multi_player_bu.setVisible(false);
+        		
         		main.StartGame();    
-        		single_player_bu.setEnabled(true);
-        		multi_player_bu.setEnabled(true);
+        		single_player_bu.setVisible(true);
+        		multi_player_bu.setVisible(true);
         		
 
         		
