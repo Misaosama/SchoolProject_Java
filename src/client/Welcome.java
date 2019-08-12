@@ -100,11 +100,9 @@ public class Welcome extends JFrame{
     	JPanel space = new JPanel();
     	content_pane.add(space, BorderLayout.SOUTH);
     	space.setBackground(UICOLOR);
-    	JButton space_bu = new JButton(space_img);
+    	JLabel space_bu = new JLabel(space_img);
     	space_img.setImage(space_img.getImage().getScaledInstance(400, 150,Image.SCALE_DEFAULT ));
     	space.add(space_bu);
-    	space_bu.setContentAreaFilled(false);
-    	space_bu.setBorderPainted(false);
     	space.setEnabled(false);
     	pack();
     	setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
