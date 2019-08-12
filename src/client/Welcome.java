@@ -121,15 +121,22 @@ public class Welcome extends JFrame{
             //jump to single player game when onclick
             @Override
             public void actionPerformed(ActionEvent e) {
+ 
+        		single_player_bu.setEnabled(false);
+        		multi_player_bu.setEnabled(false);
             	
-        		Main main = new Main();
-        		single_player_bu.setVisible(false);
-        		multi_player_bu.setVisible(false);
         		
-        		main.StartGame();    
-        		single_player_bu.setVisible(true);
-        		multi_player_bu.setVisible(true);
-        		
+				Thread t = new Thread(new Runnable() {
+					public void run() {
+		        		Main main = new Main();	
+		        		main.StartGame(); 
+		        		single_player_bu.setEnabled(true);
+		        		multi_player_bu.setEnabled(true);
+					}
+				});
+				t.start();
+   
+
 
         		
             }
