@@ -2,12 +2,12 @@ package client.Models;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
+//import javax.xml.bind.annotation.XmlAccessType;
+//import javax.xml.bind.annotation.XmlAccessorType;
+//import javax.xml.bind.annotation.XmlRootElement;
+//
+//@XmlRootElement
+//@XmlAccessorType(XmlAccessType.FIELD)
 public class Bullet extends movingBox{
 	public float dx;
 	public float dy;

@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
 
 import client.Models.Tank;
 import client.Models.movingBox;
@@ -51,6 +55,10 @@ public class Main {
 	
 	private Simulator sim;
 	
+	
+	Texture medicalKit;
+	Texture background;
+	
 	public static void main(String[] args) {
 		
 		Main main = new Main();
@@ -72,6 +80,7 @@ public class Main {
 	
 	// use this function to create the walls
 	private void generateItems() {
+		
 
 		walls = new ArrayList<Item>();
 		for(int i=0;i<map.length;i++) {
@@ -117,6 +126,15 @@ public class Main {
 		glLoadIdentity();
 		glOrtho(0, DISPLAY_WIDTH, DISPLAY_HEIGTH, 0, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
+		glEnable(GL_TEXTURE_2D);
+		
+		
+		//medicalKit = getTexture("docs/medical.jpg");
+		//background = getTexture("docs/background.jpg");
+
+
+		
+		
 	}
 	
 	/** Setting up screen, establishing connections (TCP, UPD) with server, etc. */
@@ -179,7 +197,7 @@ public class Main {
 	
 	/** Rendering obstacles, players and bullets */
 	private void render() {
-		
+		//glClear(GL_COLOR_BUFFER_BIT);
 		glTranslatef(-camera.xmov, -camera.ymov, 0);	//camera's position
 		
 		for(Item w : walls) {
@@ -187,7 +205,8 @@ public class Main {
 		}
 		
 		for(Item k : kits) {
-			drawItem(k);
+			drawTexture(k, medicalKit);
+			//drawItem(k);
 		}
 		
 		drawItem(tank.box);
@@ -197,6 +216,25 @@ public class Main {
 		}
 
 		
+	}
+	
+	public void drawTexture(Item item, Texture tex) {
+		if(tex == null) {
+			drawItem(item);
+			return;
+		}
+		tex.bind();
+		//glColor3f(item.c1, item.c2, item.c3);
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex2f(item.x, item.y);
+			glTexCoord2f(1, 0);
+			glVertex2f(item.x + item.w, item.y);
+			glTexCoord2f(1, 1);
+			glVertex2f(item.x + item.w, item.y + item.h);
+			glTexCoord2f(0, 1);
+			glVertex2f(item.x, item.y + item.h);
+		glEnd();
 	}
 	
 	public void drawItem(Item wall) {
@@ -337,6 +375,24 @@ public class Main {
 		}
 	}
 	
+	
+	
+	private Texture getTexture(String file) {
+		Texture texture;
+		try {
+			texture = TextureLoader.getTexture("jpg", new FileInputStream(new File(file)));
+		        // Replace PNG with your file extension
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			Display.destroy();
+			System.exit(1);
+		} catch (IOException e) {
+			e.printStackTrace();
+			Display.destroy();
+			System.exit(1);
+		}
+		return null;
+	}
 	
 	
 	
