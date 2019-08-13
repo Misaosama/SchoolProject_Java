@@ -70,6 +70,7 @@ public class Welcome extends JFrame{
 		
     	content_pane.setLayout(new BorderLayout());
     	content_pane.setBackground(UICOLOR);
+    	setMinimumSize(new Dimension(1200, 800));
     	
     	//title
     	content_pane.add(title, BorderLayout.NORTH);
@@ -114,7 +115,6 @@ public class Welcome extends JFrame{
 		
 		
 		//single player button
-		//single_player_bu.setText("Single Player Mode");
 		single_img.setImage(single_img.getImage().getScaledInstance(400, 120,Image.SCALE_DEFAULT ));
 		single_player_bu.setIcon(single_img);
 		single_player_bu.addActionListener(new ActionListener() {
@@ -149,7 +149,6 @@ public class Welcome extends JFrame{
 		});
 		
 		//multi-player button
-		//multi_player_bu.setText("Multi-Player Mode");
 		multi_img.setImage(multi_img.getImage().getScaledInstance(400, 120,Image.SCALE_DEFAULT ));
 		multi_player_bu.setIcon(multi_img);
 		multi_player_bu.addActionListener(new ActionListener() {
@@ -161,7 +160,6 @@ public class Welcome extends JFrame{
 		});
 		
 		//settings button
-		//setting_bu.setText("Settings");
 		setting_img.setImage(setting_img.getImage().getScaledInstance(200, 80,Image.SCALE_DEFAULT ));
 		setting_bu.setIcon(setting_img);
 		setting_bu.addActionListener(new ActionListener() {
@@ -173,7 +171,6 @@ public class Welcome extends JFrame{
 		});
 		
 		//exit button
-		//exit_bu.setText("Exit");
 		exit_img.setImage(exit_img.getImage().getScaledInstance(200, 80,Image.SCALE_DEFAULT ));
 		exit_bu.setIcon(exit_img);
 		exit_bu.addActionListener(new ActionListener() {
@@ -191,7 +188,39 @@ public class Welcome extends JFrame{
 	        //exit the game when onclick
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	//TODO:add help message
+	            final JDialog dialog = new JDialog(Welcome.this, "Help message", true);
+	            dialog.setSize(600, 600);
+	            dialog.setResizable(false);
+	            dialog.setLocationRelativeTo(Welcome.this);
+
+	            JLabel message1 = new JLabel("Click on Single Player Mode or Multiplayer Mode to start a game."); 
+	            JLabel message2 = new JLabel("Press 'w' 's' 'a' 'd' or '↑' '↓' '←' '→' on keyboard to control the tank.");
+	            JLabel message3 = new JLabel("Left-click the mouse to shoot a bullet.");
+	            JButton okBtn = new JButton("OK");
+	            okBtn.addActionListener(new ActionListener() {
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                    dialog.dispose();
+	                }
+	            });
+	            JPanel panel = new JPanel();
+	            panel.setLayout(new BorderLayout());
+	            JPanel panel2 = new JPanel();
+	            BoxLayout boxlayout=new BoxLayout(panel2, BoxLayout.Y_AXIS);
+	    	    panel2.setLayout(boxlayout);
+	    	    panel.add(panel2,BorderLayout.CENTER);
+	    	    panel2.add(Box.createRigidArea(new Dimension(25, 25)));
+	            panel2.add(message1);
+	            panel2.add(Box.createRigidArea(new Dimension(25, 25)));
+	            panel2.add(message2);
+	            panel2.add(Box.createRigidArea(new Dimension(25, 25)));
+	            panel2.add(message3);
+	            
+	            panel.add(okBtn,BorderLayout.SOUTH);
+
+	            dialog.setContentPane(panel);
+
+	            dialog.setVisible(true);
 	        }
 		});
 	}
