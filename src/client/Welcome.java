@@ -3,9 +3,11 @@ package client;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.text.Collator;
 
 import javax.swing.*;
+
 
 public class Welcome extends JFrame{
 
@@ -36,6 +38,8 @@ public class Welcome extends JFrame{
     public JButton exit_bu;
     
     public Color UICOLOR;
+    
+    public File Map = new File("docs/map2.txt");
     
 	public Welcome() {
 		content_pane = this.getContentPane();
@@ -166,7 +170,34 @@ public class Welcome extends JFrame{
 	        //jump to sdettings when onclick
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	//TODO: add settings
+	        	final JDialog dialog = new JDialog(Welcome.this, "Settings", true);
+	            dialog.setSize(250, 120);
+	            dialog.setResizable(false);
+	            dialog.setLocationRelativeTo(Welcome.this);
+	            JButton set_file_bu = new JButton("Set new map for single player mode");
+	            set_file_bu.addActionListener(new ActionListener() {
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                	int select = JOptionPane.showConfirmDialog(dialog, "please select local map file", "set new map", JOptionPane.ERROR_MESSAGE);
+	                	if( select == JOptionPane.YES_OPTION){
+	                        JFileChooser fileChooser = new JFileChooser();
+	                        fileChooser.setCurrentDirectory(new File("."));
+	                        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+	                        fileChooser.setMultiSelectionEnabled(false);
+	                        int value = fileChooser.showOpenDialog(null);
+	                        if(value == JFileChooser.APPROVE_OPTION) {
+	                        	Map = fileChooser.getSelectedFile();
+	                        }
+	                	}
+	                	dialog.dispose();
+	                }
+	                	
+	            });
+	            JPanel panel = new JPanel();
+	            panel.setLayout(new BorderLayout());
+	            panel.add(set_file_bu,BorderLayout.CENTER);
+	            dialog.setContentPane(panel);
+	            dialog.setVisible(true);
 	        }
 		});
 		
@@ -196,6 +227,7 @@ public class Welcome extends JFrame{
 	            JLabel message1 = new JLabel("Click on Single Player Mode or Multiplayer Mode to start a game."); 
 	            JLabel message2 = new JLabel("Press 'w' 's' 'a' 'd' or '↑' '↓' '←' '→' on keyboard to control the tank.");
 	            JLabel message3 = new JLabel("Left-click the mouse to shoot a bullet.");
+	            JLabel message4 = new JLabel("You can use the map editor to create a new map and set the new map in settings.");
 	            JButton okBtn = new JButton("OK");
 	            okBtn.addActionListener(new ActionListener() {
 	                @Override
@@ -215,11 +247,12 @@ public class Welcome extends JFrame{
 	            panel2.add(message2);
 	            panel2.add(Box.createRigidArea(new Dimension(25, 25)));
 	            panel2.add(message3);
+	            panel2.add(Box.createRigidArea(new Dimension(25, 25)));
+	            panel2.add(message4);
 	            
 	            panel.add(okBtn,BorderLayout.SOUTH);
 
 	            dialog.setContentPane(panel);
-
 	            dialog.setVisible(true);
 	        }
 		});
