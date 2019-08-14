@@ -46,6 +46,7 @@ public class Main {
 	
 	private ArrayList<Item> walls;
 	private ArrayList<Item> kits;
+	private ArrayList<Tank> enemies;
 	private int[][] map;
 	
 	private Camera camera;
@@ -102,6 +103,17 @@ public class Main {
 				}
 			}
 		}
+		
+		enemies = new ArrayList<Tank>();
+		for(int i=0;i<map.length;i++) {
+			for(int j=0;j<map[0].length;j++) {
+				if(map[i][j]==4||map[i][j]==5) {
+					// 
+					enemies.add(Tank.createEnemy(WALL_SIZE*j, WALL_SIZE*i, WALL_SIZE,
+							80, false, i, j));
+				}
+			}
+		}
 
 		
 		
@@ -151,7 +163,7 @@ public class Main {
 		tank = new Tank(3*WALL_SIZE,WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
 		bullets = new ArrayList<Bullet>();
 		camera = new Camera(0, 0);
-		sim = new Simulator(tank, map.clone(), bullets, kits);
+		sim = new Simulator(tank, map.clone(), bullets, kits, enemies);
 		ArrayList<movingBox> movingObjects = new ArrayList<movingBox>();
 
 //		new Thread(new UdpConnection(this, connections, client_port_udp)).start();
@@ -213,6 +225,13 @@ public class Main {
 		
 		for(Bullet b : bullets) {
 			drawItem(b.box);
+		}
+		
+		for(Tank e : enemies) {
+			drawItem(e.box);
+			for(Bullet b : e.newBullets) {
+				drawItem(b.box);
+			}
 		}
 
 		

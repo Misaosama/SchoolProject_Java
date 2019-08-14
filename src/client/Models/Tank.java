@@ -25,6 +25,7 @@ public class Tank extends movingBox {
 	private File file;
 	private BufferedImage img;
 	private int maxHealth;
+	public int r,c;
 	
 	public Tank(float x, float y, int size, int health, boolean whichImage, int speed) {
 		super(x,y);
@@ -56,8 +57,8 @@ public class Tank extends movingBox {
 		return box.y;
 	}
 	
-	public void beAttacked() {
-		health -= 10;
+	public void beAttacked(int d) {
+		health -= d;
 		if(health <=0) { // do something if dead
 			
 		}
@@ -75,9 +76,57 @@ public class Tank extends movingBox {
 		speed -=2;
 	}
 	
+	public void shot() {
+		
+	}
 	
-
+	public static enemy createEnemy(float x, float y, int size, int health, boolean Boss, int i, int j) {
+		return new enemy(x,y,size,health,Boss,i,j);
+	}
 	
 
 
 }
+
+class enemy extends Tank{
+	private boolean boss;
+	
+	
+	public enemy(float x, float y, int size, int health, boolean Boss, int i, int j) {
+		super(x,y,size,health,false,0);
+		r = i;
+		c = j;
+	
+		boss = Boss;
+		if(Boss) {
+			health *= 3;
+			box = new movingItem(x,y,(float)size,(float)size,
+					(float)1,(float)1,(float)0,-1,-1);
+		}
+		else {
+			box = new movingItem(x,y,(float)size,(float)size,
+					(float)0.5,(float)0.5,(float)0,-1,-1);
+		}
+			
+	}
+	
+	public void shot() {
+		newBullets.add(new Bullet(x+size/2, y+size/2, 0,8, 5));
+		newBullets.add(new Bullet(x+size/2, y+size/2, 0,-8, 5));
+		newBullets.add(new Bullet(x+size/2, y+size/2, -8,0, 5));
+		newBullets.add(new Bullet(x+size/2, y+size/2, 8,0, 5));
+			float s = (float) Math.sqrt(8) * 2;
+			newBullets.add(new Bullet(x+size/2, y+size/2, s,s, 5));
+			newBullets.add(new Bullet(x+size/2, y+size/2, s,-s, 5));
+			newBullets.add(new Bullet(x+size/2, y+size/2, -s,s, 5));
+			newBullets.add(new Bullet(x+size/2, y+size/2, -s,-s, 5));
+
+			
+
+	}
+	
+}
+
+
+
+
