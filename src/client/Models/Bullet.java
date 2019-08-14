@@ -24,6 +24,6 @@ public class Bullet extends movingBox{
 		this.dy = dy;
 		this.size = size;
 		box = new movingItem(x,y,(float)size,(float)size,
-				(float)0,(float)1,(float)1);
+				(float)0,(float)1,(float)1,-1,-1);
 	}
 }

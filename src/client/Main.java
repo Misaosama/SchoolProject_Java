@@ -38,7 +38,7 @@ public class Main {
 	private static final int WALL_SIZE = 20;
 	private static final int TANK_SIZE = 15;
 	
-	private static final int SPEED = 8;
+	private static final int SPEED = 4;
 	
 	
 
@@ -87,7 +87,7 @@ public class Main {
 			for(int j=0;j<map[0].length;j++) {
 				if(map[i][j]==1) {
 					walls.add(ItemFactory.createItem(1, WALL_SIZE*j, WALL_SIZE*i,
-							WALL_SIZE, WALL_SIZE));
+							WALL_SIZE, WALL_SIZE,i,j));
 				}
 			}
 		}
@@ -98,7 +98,7 @@ public class Main {
 				if(map[i][j]==2||map[i][j]==3) {
 					kits.add(ItemFactory.createItem(map[i][j], 
 							WALL_SIZE*j, WALL_SIZE*i,
-							WALL_SIZE, WALL_SIZE));
+							WALL_SIZE, WALL_SIZE,i,j));
 				}
 			}
 		}
@@ -148,10 +148,10 @@ public class Main {
 		
 //		obstacles = connections.getMapDetails();
 
-		tank = new Tank(3*WALL_SIZE,WALL_SIZE,TANK_SIZE,TANK_SIZE,true);
+		tank = new Tank(3*WALL_SIZE,WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
 		bullets = new ArrayList<Bullet>();
 		camera = new Camera(0, 0);
-		sim = new Simulator(tank, map, bullets);
+		sim = new Simulator(tank, map.clone(), bullets, kits);
 		ArrayList<movingBox> movingObjects = new ArrayList<movingBox>();
 
 //		new Thread(new UdpConnection(this, connections, client_port_udp)).start();
@@ -285,7 +285,7 @@ public class Main {
 				if (Keyboard.getEventKey() == Keyboard.KEY_W
 						|| Keyboard.getEventKey() == Keyboard.KEY_UP) {
 					if (Keyboard.getEventKeyState()) {
-						tank.dy = -SPEED;
+						tank.dy = -tank.speed;
 						up = true;
 					} else {
 						up = false;
@@ -297,7 +297,7 @@ public class Main {
 				if (Keyboard.getEventKey() == Keyboard.KEY_S
 						|| Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
 					if (Keyboard.getEventKeyState()) {
-						tank.dy = SPEED;
+						tank.dy = tank.speed;
 						down = true;
 					} else {
 						down = false;
@@ -309,7 +309,7 @@ public class Main {
 				if (Keyboard.getEventKey() == Keyboard.KEY_D
 						|| Keyboard.getEventKey() == Keyboard.KEY_RIGHT) {
 					if (Keyboard.getEventKeyState()) {
-						tank.dx = SPEED;
+						tank.dx = tank.speed;
 						right = true;
 					} else {
 						right = false;
@@ -321,7 +321,7 @@ public class Main {
 				if (Keyboard.getEventKey() == Keyboard.KEY_A
 						|| Keyboard.getEventKey() == Keyboard.KEY_LEFT) {
 					if (Keyboard.getEventKeyState()) {
-						tank.dx = -SPEED;
+						tank.dx = -tank.speed;
 						left = true;
 					} else {
 						left = false;

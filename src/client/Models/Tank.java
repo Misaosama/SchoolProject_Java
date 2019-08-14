@@ -17,6 +17,7 @@ public class Tank extends movingBox {
 	public int health;
 	//public float x, y, dx, dy;
 	public int size;
+	public int speed;
 	
 	public ArrayList<Bullet> newBullets;
 	public movingItem box;
@@ -25,7 +26,7 @@ public class Tank extends movingBox {
 	private BufferedImage img;
 	private int maxHealth;
 	
-	public Tank(float x, float y, int size, int health, boolean whichImage) {
+	public Tank(float x, float y, int size, int health, boolean whichImage, int speed) {
 		super(x,y);
 		this.x = x;
 		this.y = y;
@@ -35,12 +36,14 @@ public class Tank extends movingBox {
 		newBullets = new ArrayList<Bullet>();
 		if(whichImage) {
 			box = new movingItem(x,y,(float)size,(float)size,
-					(float)0.5,(float)0.5,(float)0.5);
+					(float)0.5,(float)0.5,(float)0.5,-1,-1);
 		}
 		else {
 			box = new movingItem(x,y,(float)size,(float)size,
-					(float)0.8,(float)0.8,(float)0.8);
+					(float)0.8,(float)0.8,(float)0.8,-1,-1);
 		}
+		
+		this.speed = speed;
 		
 		
 	}
@@ -53,9 +56,25 @@ public class Tank extends movingBox {
 		return box.y;
 	}
 	
+	public void beAttacked() {
+		health -= 10;
+		if(health <=0) { // do something if dead
+			
+		}
+	}
+	
 	public void healthKit(){
 		health = maxHealth;
 	}
+	
+	public void accelerate() {
+		speed +=2;
+	}
+	
+	public void decelerate() {
+		speed -=2;
+	}
+	
 	
 
 	

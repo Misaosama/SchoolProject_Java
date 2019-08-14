@@ -12,16 +12,17 @@ public class Simulator {
 	
 	private Tank tank;
 	//private ArrayList<Item> walls;
-	//private ArrayList<Item> kits;
+	private ArrayList<Item> kits;
 	private List<Bullet> bullets;
 	
 	private int[][] map;
 	
 	public Simulator(Tank t, int[][] m, 
-			ArrayList<Bullet> b ) {
+			ArrayList<Bullet> b, ArrayList<Item> k ) {
 		tank = t;
 		bullets = b;
 		map = m;
+		kits = k;
 	}
 	
 	public void update() {
@@ -48,8 +49,35 @@ public class Simulator {
 		          map[row][col2]==1 || map[row2][col2]==1) {
 			tank.box.x -= tank.dx;
 			tank.box.y -= tank.dy;
+			if(tank.speed>6) tank.decelerate();
 
-		}
+		} else if (map[row][col]==2 || map[row2][col]==2 ||
+		          map[row][col2]==2 || map[row2][col2]==2) {
+			// When get a healthKit, add health and remove its kit
+			tank.healthKit();
+			map[row][col]= 0; map[row2][col]=0; map[row][col2]=0; map[row2][col2]=0;
+			Iterator<Item> itr = kits.iterator();
+			while(itr.hasNext()) {
+				Item kit = itr.next();
+				if(kit.r == row || kit.r == row2) {
+					itr.remove();
+				}
+			}
+			
+			
+		} else if (map[row][col]==3 || map[row2][col]==3 ||
+		          map[row][col2]==3 || map[row2][col2]==3) { 
+			//When get a speedKit, increase speed and remove that kit
+			tank.accelerate();
+			map[row][col]= 0; map[row2][col]=0; map[row][col2]=0; map[row2][col2]=0;
+			Iterator<Item> itr = kits.iterator();
+			while(itr.hasNext()) {
+				Item kit = itr.next();
+				if(kit.r == row || kit.r == row2) {
+					itr.remove();
+				}
+			}
+		} 
 		
 		//check for bullet 
 		Iterator<Bullet> itr = bullets.iterator();
