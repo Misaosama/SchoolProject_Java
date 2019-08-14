@@ -8,6 +8,8 @@ import java.text.Collator;
 
 import javax.swing.*;
 
+import View.MapEditor;
+
 
 public class Welcome extends JFrame{
 
@@ -26,9 +28,11 @@ public class Welcome extends JFrame{
     public ImageIcon single_img;
     public ImageIcon multi_img;
     public ImageIcon setting_img;
+    public ImageIcon setting_img2;
     public ImageIcon help_img;
     public ImageIcon exit_img;
     public ImageIcon space_img;
+    public ImageIcon map_img;
 
     
     public JButton single_player_bu;
@@ -36,6 +40,7 @@ public class Welcome extends JFrame{
     public JButton setting_bu;
     public JButton help_bu;
     public JButton exit_bu;
+    public JButton map_bu;
     
     public Color UICOLOR;
     
@@ -52,15 +57,19 @@ public class Welcome extends JFrame{
 		single_img = new ImageIcon("./docs/single.jpg");
 		multi_img = new ImageIcon("./docs/multi.jpg");
 		setting_img = new ImageIcon("./docs/setting.jpg");
+		setting_img2 = new ImageIcon("./docs/setting2.jpg");
+		
 		help_img = new ImageIcon("./docs/help.jpg");
 		exit_img = new ImageIcon("./docs/exit.jpg");
 		space_img = new ImageIcon("./docs/space.jpg");
+		map_img = new ImageIcon("./docs/map.jpg");
 		
 		single_player_bu = new JButton();
 		multi_player_bu = new JButton();
 		setting_bu = new JButton();
 		exit_bu = new JButton();
 		help_bu = new JButton();
+		map_bu = new JButton();
 		
 		title_label = new JLabel();
 		
@@ -98,9 +107,11 @@ public class Welcome extends JFrame{
     	//bot_panel
     	buttons.add(bot_panel,BorderLayout.SOUTH);
     	bot_panel.setBackground(UICOLOR);
+    	bot_panel.add(map_bu);
     	bot_panel.add(setting_bu);
     	bot_panel.add(help_bu);
     	bot_panel.add(exit_bu);
+
     	
     	JPanel space = new JPanel();
     	content_pane.add(space, BorderLayout.SOUTH);
@@ -128,6 +139,8 @@ public class Welcome extends JFrame{
  
         		single_player_bu.setEnabled(false);
         		multi_player_bu.setEnabled(false);
+        		exit_bu.setEnabled(false);
+        		map_bu.setEnabled(false);
         		setting_bu.setEnabled(false);
         		help_bu.setEnabled(false);
         		exit_bu.setEnabled(false);
@@ -139,6 +152,7 @@ public class Welcome extends JFrame{
 		        		main.StartGame(); 
 		        		single_player_bu.setEnabled(true);
 		        		multi_player_bu.setEnabled(true);
+		        		map_bu.setEnabled(true);
 		        		setting_bu.setEnabled(true);
 		        		help_bu.setEnabled(true);
 		        		exit_bu.setEnabled(true);
@@ -174,7 +188,10 @@ public class Welcome extends JFrame{
 	            dialog.setSize(250, 120);
 	            dialog.setResizable(false);
 	            dialog.setLocationRelativeTo(Welcome.this);
-	            JButton set_file_bu = new JButton("Set new map for single player mode");
+	            
+	            JButton set_file_bu = new JButton("");
+	            setting_img2.setImage(setting_img2.getImage().getScaledInstance(250, 120,Image.SCALE_DEFAULT ));
+	            set_file_bu.setIcon(setting_img2);
 	            set_file_bu.addActionListener(new ActionListener() {
 	                @Override
 	                public void actionPerformed(ActionEvent e) {
@@ -256,6 +273,43 @@ public class Welcome extends JFrame{
 	            dialog.setVisible(true);
 	        }
 		});
+		
+		
+		map_img.setImage(map_img.getImage().getScaledInstance(200, 80,Image.SCALE_DEFAULT ));
+		map_bu.setIcon(map_img);
+		map_bu.addActionListener(new ActionListener() {
+            //jump to map editor when onclick
+            @Override
+            public void actionPerformed(ActionEvent e) {
+ 
+        		single_player_bu.setEnabled(false);
+        		multi_player_bu.setEnabled(false);
+        		exit_bu.setEnabled(false);
+        		map_bu.setEnabled(false);
+        		setting_bu.setEnabled(false);
+        		help_bu.setEnabled(false);
+        		exit_bu.setEnabled(false);
+        		
+        		
+				Thread t = new Thread(new Runnable() {
+					public void run() {
+				        MapEditor gui2 = new MapEditor();
+				        gui2.setVisible(true);
+		        		single_player_bu.setEnabled(true);
+		        		multi_player_bu.setEnabled(true);
+		        		map_bu.setEnabled(true);
+		        		setting_bu.setEnabled(true);
+		        		help_bu.setEnabled(true);
+		        		exit_bu.setEnabled(true);
+					}
+				});
+				t.start();
+
+
+        		
+            }
+		});
+		
 	}
 	
 	
