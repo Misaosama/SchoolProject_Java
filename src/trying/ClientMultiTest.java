@@ -29,7 +29,26 @@ public class ClientMultiTest {
 	public static void main(String[] args) throws InterruptedException {
 		ClientMultiTest mf = new ClientMultiTest();	
 		ClientTCPConnection tcpC = new ClientTCPConnection("localhost");
-	
+		
+		try {
+			tcpC.connect();
+		} catch (IOException e2) {
+			// Connection Failed
+			e2.printStackTrace();
+			System.exit(0);
+		}
+		
+		//wait until server tells all clients connected:
+		System.out.println("Waiting other players...");
+		Integer ID = -1;
+		
+		try {
+			ID = tcpC.receiveID();
+		} catch (ClassNotFoundException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println("Receive id as: " + ID);
 		
 		ClientTCPConnectionHandler ch = new ClientTCPConnectionHandler(tcpC, mf.clientMovings_, mf );
 		Thread cThread = new Thread(ch);
@@ -155,7 +174,7 @@ class ClientTCPConnectionHandler implements Runnable{
 	public void run() {
 		
 		try {
-			this.connection_.connect();
+//			this.connection_.connect();
 			while(true) {
 				BoxContainer receivedMovings = this.connection_.receive();
 //				synchronized(connection_) {

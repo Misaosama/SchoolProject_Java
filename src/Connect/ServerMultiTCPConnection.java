@@ -39,7 +39,10 @@ public class ServerMultiTCPConnection {
 			this.outputs_.add( new ObjectOutputStream(outStream) );
 			GUIMessage_ = "Incoming connection from a client at " + sockets_.get(i).getRemoteSocketAddress().toString() + " accepted.\n" ;
 		}
-		
+		//send ID to all clients:
+		for( int i = 0; i < this.numberOfActiveClients_; i++) {
+			this.outputs_.get(i).writeObject(new Integer(i));
+		}
 	}
 	
 	public DataInputStream getInputStream(int i) {
@@ -57,7 +60,6 @@ public class ServerMultiTCPConnection {
 	
 	public void sendToAll(BoxContainer Movings){
 		
-//		try {
 			for( int i = 0; i < this.numberOfActiveClients_; i++) {
 				if(!this.sockets_.get(i).isConnected()) {
 					System.out.println("disconnected");
@@ -85,10 +87,6 @@ public class ServerMultiTCPConnection {
 				}
 				
 			}	
-//		} catch (IOException e) {
-//			System.out.println("BBBBBBBBBBBBBBBBBBBB");
-//			e.printStackTrace();
-//		}
 		
 	}
 	
