@@ -1,6 +1,6 @@
 package client.Models;
 
-public abstract class Item {
+public class Item implements java.io.Serializable {
 	public float c1,c2,c3;
 
 
@@ -16,6 +16,9 @@ public abstract class Item {
 		h = height;
 		r = i;
 		c = j;
+		c1 = (float)100.0;
+		c2 = (float)100.0; 
+		c3 = (float)1.0;
 	}
 	
 	

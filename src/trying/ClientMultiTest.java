@@ -3,6 +3,8 @@ package trying;
 import java.io.IOException;
 import Connect.ClientTCPConnection;
 import View.Box;
+import client.Models.Item;
+import client.Models.ItemContainer;
 
 //GUI related
 import static org.lwjgl.opengl.GL11.*;
@@ -20,10 +22,10 @@ public class ClientMultiTest {
 	private static final int MAP_WIDTH = 1500;
 	private static final int MAP_HEIGTH = 900;
 	
-	protected BoxContainer clientMovings_;
+	protected ItemContainer clientMovings_;
 	
 	public ClientMultiTest() {
-		clientMovings_ = new BoxContainer();
+		clientMovings_ = new ItemContainer();
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
@@ -137,16 +139,16 @@ public class ClientMultiTest {
 	private void render() {
 		
 		synchronized(this.clientMovings_) {
-			for( Box box : this.clientMovings_.boxes_) {
-				drawObject(box);
+			for( Item item : this.clientMovings_.items_) {
+				drawObject(item);
 			}
 		}
 		
 		
 	}
 	
-	private void drawObject(Box box) {
-		glColor3f(box.r, box.g, box.b);
+	private void drawObject(Item box) {
+		glColor3f(box.c1, box.c2, box.c3);
 		glBegin(GL_QUADS);
 			glVertex2f(box.x, box.y);
 			glVertex2f(box.x + box.w, box.y);
@@ -160,11 +162,11 @@ public class ClientMultiTest {
 class ClientTCPConnectionHandler implements Runnable{
 	
 	private ClientTCPConnection connection_;
-	private BoxContainer allMovingsReceived_;
+	private ItemContainer allMovingsReceived_;
 	private ClientMultiTest cmt_;
 	
 	public ClientTCPConnectionHandler( ClientTCPConnection connection, 
-			BoxContainer allMovingsToReceive, ClientMultiTest cmt ) {
+			ItemContainer allMovingsToReceive, ClientMultiTest cmt ) {
 		this.connection_ = connection;
 		this.allMovingsReceived_ = allMovingsToReceive;
 		this.cmt_ = cmt;
@@ -176,7 +178,7 @@ class ClientTCPConnectionHandler implements Runnable{
 		try {
 //			this.connection_.connect();
 			while(true) {
-				BoxContainer receivedMovings = this.connection_.receive();
+				ItemContainer receivedMovings = this.connection_.receive();
 //				synchronized(connection_) {
 //					this.connection_.send(-1);
 //					System.out.println("sent");

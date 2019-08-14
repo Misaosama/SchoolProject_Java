@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 //import java.util.*;
 
+import client.Models.ItemContainer;
 import trying.BoxContainer;
 
 //import java.nio.charset.*;
@@ -56,10 +57,10 @@ public class ClientTCPConnection {
 	}
 
 	 
-	public BoxContainer receive() throws ClassNotFoundException, IOException {
+	public ItemContainer receive() throws ClassNotFoundException, IOException {
 		// TODO Auto-generated method stub
 //		this.input.e
-		BoxContainer allMovings = (BoxContainer)this.input.readObject();
+		ItemContainer allMovings = (ItemContainer)this.input.readObject();
 //		log.info(String.format("Message %s received.\n", message));
 		return allMovings;
 	}

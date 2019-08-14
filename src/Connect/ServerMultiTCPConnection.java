@@ -4,11 +4,12 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.Models.ItemContainer;
 import trying.BoxContainer;
 
 
 public class ServerMultiTCPConnection {
-	private static final int DEFAULT_PORT = 8189;
+	private int DEFAULT_PORT = 8188;
 	private ServerSocket serverSocket_;
 	private List<Socket> sockets_;
 	private List<DataInputStream> inputs_;
@@ -20,7 +21,8 @@ public class ServerMultiTCPConnection {
 	private boolean myTurn_;
 	private boolean ready_;
 	
-	public ServerMultiTCPConnection( int numberOfClientsWanted ) throws IOException {
+	public ServerMultiTCPConnection( int numberOfClientsWanted, int portNumber ) throws IOException {
+		this.DEFAULT_PORT = portNumber;
 		this.numberOfClientsWanted_ = numberOfClientsWanted;
 		clientDisconnected_ = new boolean[numberOfClientsWanted_];
 		this.serverSocket_ = new ServerSocket(DEFAULT_PORT);
@@ -60,7 +62,7 @@ public class ServerMultiTCPConnection {
 		return signal;
 	}
 	
-	public void sendToAll(BoxContainer Movings){
+	public void sendToAll(ItemContainer Movings){
 		
 			for( int i = 0; i < this.numberOfClientsWanted_; i++) {
 				if( this.clientDisconnected_[i] ) {

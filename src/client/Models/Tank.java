@@ -37,7 +37,7 @@ public class Tank extends movingBox {
 		newBullets = new ArrayList<Bullet>();
 		if(whichImage) {
 			box = new movingItem(x,y,(float)size,(float)size,
-					(float)0.5,(float)0.5,(float)0.5,-1,-1);
+					(float)0.7,(float)0.5,(float)0.6,-1,-1);
 		}
 		else {
 			box = new movingItem(x,y,(float)size,(float)size,
