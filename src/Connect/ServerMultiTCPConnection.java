@@ -42,7 +42,7 @@ public class ServerMultiTCPConnection {
 			GUIMessage_ = "Incoming connection from a client at " + sockets_.get(i).getRemoteSocketAddress().toString() + " accepted.\n" ;
 		}
 		//send ID to all clients:
-		for( int i = 0; i < this.numberOfActiveClients_; i++) {
+		for( int i = 0; i < this.numberOfClientsWanted_; i++) {
 			this.outputs_.get(i).writeObject(new Integer(i));
 		}
 	}
@@ -62,7 +62,7 @@ public class ServerMultiTCPConnection {
 	
 	public void sendToAll(BoxContainer Movings){
 		
-			for( int i = 0; i < this.numberOfActiveClients_; i++) {
+			for( int i = 0; i < this.numberOfClientsWanted_; i++) {
 				if( this.clientDisconnected_[i] ) {
 					continue;
 				}
