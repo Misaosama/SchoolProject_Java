@@ -94,7 +94,10 @@ public class ClientMultiTest {
 			if(down) {
 //				mf.box.moveDown(); 
 				try {
-					tcpC.send(1);
+//					synchronized(tcpC) {
+						tcpC.send(1);
+//					}
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -155,7 +158,11 @@ class ClientTCPConnectionHandler implements Runnable{
 			this.connection_.connect();
 			while(true) {
 				BoxContainer receivedMovings = this.connection_.receive();
-				this.connection_.send(-1);
+//				synchronized(connection_) {
+//					this.connection_.send(-1);
+//					System.out.println("sent");
+//				}
+				
 //				synchronized(allMovingsReceived_) {
 //					this.allMovingsReceived_.becomeThisBC(receivedMovings); 
 //				}
