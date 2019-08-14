@@ -64,6 +64,10 @@ public class ClientTCPConnection {
 		return allMovings;
 	}
 	
+	public Integer receiveID() throws ClassNotFoundException, IOException {
+		Integer id = (Integer)this.input.readObject();
+		return id;
+	}
 
 	 
 	public void send(int signal) throws IOException {

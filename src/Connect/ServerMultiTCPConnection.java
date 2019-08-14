@@ -13,6 +13,7 @@ public class ServerMultiTCPConnection {
 	private List<Socket> sockets_;
 	private List<DataInputStream> inputs_;
 	private List<ObjectOutputStream> outputs_;
+	private boolean clientDisconnected_ [];
 	private int numberOfClientsWanted_;
 	private int numberOfActiveClients_;
 	private String GUIMessage_;
@@ -21,6 +22,7 @@ public class ServerMultiTCPConnection {
 	
 	public ServerMultiTCPConnection( int numberOfClientsWanted ) throws IOException {
 		this.numberOfClientsWanted_ = numberOfClientsWanted;
+		clientDisconnected_ = new boolean[numberOfClientsWanted_];
 		this.serverSocket_ = new ServerSocket(DEFAULT_PORT);
 		this.sockets_ = new ArrayList<Socket>();
 		this.inputs_ = new ArrayList<DataInputStream>();
@@ -39,7 +41,10 @@ public class ServerMultiTCPConnection {
 			this.outputs_.add( new ObjectOutputStream(outStream) );
 			GUIMessage_ = "Incoming connection from a client at " + sockets_.get(i).getRemoteSocketAddress().toString() + " accepted.\n" ;
 		}
-		
+		//send ID to all clients:
+		for( int i = 0; i < this.numberOfClientsWanted_; i++) {
+			this.outputs_.get(i).writeObject(new Integer(i));
+		}
 	}
 	
 	public DataInputStream getInputStream(int i) {
@@ -57,14 +62,8 @@ public class ServerMultiTCPConnection {
 	
 	public void sendToAll(BoxContainer Movings){
 		
-//		try {
-			for( int i = 0; i < this.numberOfActiveClients_; i++) {
-				if(!this.sockets_.get(i).isConnected()) {
-					System.out.println("disconnected");
-					continue;
-				}
-				if(this.sockets_.get(i).isClosed()) {
-					System.out.println("closed");
+			for( int i = 0; i < this.numberOfClientsWanted_; i++) {
+				if( this.clientDisconnected_[i] ) {
 					continue;
 				}
 //				this.ready_ = true;
@@ -85,17 +84,17 @@ public class ServerMultiTCPConnection {
 				}
 				
 			}	
-//		} catch (IOException e) {
-//			System.out.println("BBBBBBBBBBBBBBBBBBBB");
-//			e.printStackTrace();
-//		}
 		
 	}
 	
+	//just mark the client as disconnected, so that the list of streams is untouched,
+	//otherwise have to update clients' ids.
 	public void oneClientDisconnected( int i ) {
-		this.inputs_.remove(i);
-		this.outputs_.remove(i);
-		this.sockets_.remove(i);
+//		this.inputs_.remove(i);
+//		this.outputs_.remove(i);
+//		this.sockets_.remove(i);
+		this.clientDisconnected_[i] = true;
+//		this.sockets_.get(i).close();//necessary?
 		this.numberOfActiveClients_ --;
 	}
 	
