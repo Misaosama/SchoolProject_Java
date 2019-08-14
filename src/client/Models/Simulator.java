@@ -60,7 +60,8 @@ public class Simulator {
 	public Simulator(Tank t, int[][] m, 
 			ArrayList<Bullet> b, ArrayList<Item> k, ArrayList<Tank> e ) {
 		tank = t;
-		bullets = b;
+		//bullets = b;
+		bullets = t.newBullets;
 		map = m;
 		kits = k;
 		enemies = e;

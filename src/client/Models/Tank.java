@@ -69,11 +69,13 @@ public class Tank extends movingBox {
 	}
 	
 	public void accelerate() {
-		speed +=2;
+		speed +=4;
 	}
 	
 	public void decelerate() {
-		speed -=2;
+		
+		speed -=4;
+		speed = Math.max(speed, 4);
 	}
 	
 	public void shot() {

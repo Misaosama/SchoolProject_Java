@@ -223,7 +223,7 @@ public class Main {
 		
 		drawItem(tank.box);
 		
-		for(Bullet b : bullets) {
+		for(Bullet b : tank.newBullets) {
 			drawItem(b.box);
 		}
 		
@@ -293,7 +293,7 @@ public class Main {
 					float size = 5;
 
 					
-					bullets.add(new Bullet(xmain, ymain, dx,dy, size));
+					tank.newBullets.add(new Bullet(xmain, ymain, dx,dy, size));
 				}
 			}
 			
