@@ -8,7 +8,7 @@ import java.io.Serializable;
 //
 //@XmlRootElement
 //@XmlAccessorType(XmlAccessType.FIELD)
-public class Bullet extends movingBox{
+public class Bullet extends movingBox implements java.io.Serializable{
 	public float dx;
 	public float dy;
 	public float size;

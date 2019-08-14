@@ -13,7 +13,7 @@ import javax.swing.*;
 
 
 
-public class Tank extends movingBox {
+public class Tank extends movingBox implements java.io.Serializable {
 	public int health;
 	//public float x, y, dx, dy;
 	public int size;

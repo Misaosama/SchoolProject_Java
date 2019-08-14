@@ -3,6 +3,7 @@ package trying;
 import java.io.IOException;
 import Connect.ClientTCPConnection;
 import View.Box;
+import client.Models.Bullet;
 import client.Models.Item;
 import client.Models.ItemContainer;
 
@@ -21,6 +22,7 @@ public class ClientMultiTest {
 	private static final int FRAMES_PER_SECOND = 30;
 	private static final int MAP_WIDTH = 1500;
 	private static final int MAP_HEIGTH = 900;
+	private static final int SPEED = 4;
 	
 	protected ItemContainer clientMovings_;
 	
@@ -86,7 +88,27 @@ public class ClientMultiTest {
 			glTranslatef(0, 0, 0);
 			
 			mf.render();
+			
 			if (Display.isActive()) {
+				
+				while (Mouse.next()) {
+					
+					if (Mouse.getEventButtonState() ) {	
+
+						float xmouse = Mouse.getX(); //+ camera.x;
+						float ymouse = DISPLAY_HEIGTH - Mouse.getY(); // + camera.y;
+						
+						try {
+							tcpC.send(5);
+							tcpC.sendFloat(xmouse);
+							tcpC.sendFloat(ymouse);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}						
+						
+					}
+				}
+				
 				while (Keyboard.next()) {
 					
 					if (Keyboard.getEventKey() == Keyboard.KEY_S
@@ -194,10 +216,8 @@ class ClientTCPConnectionHandler implements Runnable{
 			
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

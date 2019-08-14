@@ -3,15 +3,16 @@ package Server;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import Connect.ServerMultiTCPConnection;
+import client.Models.Bullet;
 //import Connect.ServerTCPConnection;
-import View.Box;
 import client.Models.Item;
 import client.Models.ItemContainer;
 import client.Models.Tank;
-import trying.BoxContainer;
 
 public class ServerStarter{
 	private static final int DISPLAY_WIDTH = 700;
@@ -30,11 +31,16 @@ public class ServerStarter{
 	private int numberOfClients_;
 	private int portNumber_;
 	private ItemContainer AllMovings_;
+	private List<Tank> players_;
+	private List<Bullet> allBullets_;
 	
 	public ServerStarter( int numberOfClients, int portNumber ) {
 		this.numberOfClients_ = numberOfClients;
 		this.portNumber_ = portNumber;
 		this.AllMovings_ = new ItemContainer();
+		this.allBullets_ = new ArrayList<Bullet>();
+		players_ = new ArrayList<Tank>();
+		
 	}
 	
 	public void startServer() {
@@ -51,13 +57,14 @@ public class ServerStarter{
 			for ( int i = 0 ; i < numberOfClients_; i++) {
 //				Item thisItem = new Item( (float)30.0*i, (float)30.0*i, (float)100.0, (float)100.0, 0, 0);
 				Tank tank =	new Tank(3*WALL_SIZE,WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
-				Item thisItem = tank.box;
-				this.AllMovings_.addItem(thisItem);
+//				Item thisItem = tank.box;
+//				this.AllMovings_.addItem(thisItem);
+				this.players_.add(tank);
 			}
 			
 			for ( int i = 0; i < numberOfClients_; i++) {
 				ClientListener ch =  new ClientListener(i,tcpSM.getInputStream(i),tcpSM.getOutputStream(i), 
-						this.AllMovings_);
+						this.AllMovings_, this.players_, this.allBullets_);
 				Thread sThread = new Thread(ch);
 				sThread.start();
 			}
@@ -67,15 +74,25 @@ public class ServerStarter{
 				while(true) {
 					//simulate part.
 					
+					
+					//add all tanks and bullets
+					for( Tank player: this.players_) {
+						this.AllMovings_.addItem(player.box);
+						for( Bullet b : player.newBullets ) {
+							this.AllMovings_.addItem( b.box );
+						}
+					}
+					
 					try {
 						tcpSM.sendToAll(this.AllMovings_);
 					}catch(Exception e) {
 						return;
 					}
 					
-					int rp = 0;
-						
-					TimeUnit.MILLISECONDS.sleep(30);
+//					int rp = 0;
+					this.AllMovings_.clearContainer();
+					
+					TimeUnit.MILLISECONDS.sleep(1);
 				}
 			}catch( InterruptedException e) {
 				return;
@@ -90,7 +107,7 @@ public class ServerStarter{
 	
 	public static void main(String[] args) throws ClassNotFoundException {
 		
-        int nofClients = 2;
+        int nofClients = 1;
 		ServerStarter ss = new ServerStarter(nofClients, 8189);
 		ss.startServer();
 		
@@ -98,12 +115,18 @@ public class ServerStarter{
 }
 
 class ClientListener implements Runnable{
+	private static final int SPEED = 4;
 	private DataInputStream input_;
 	private ObjectOutputStream output_;
 	private int clientIndex_;
+	private List<Tank> tanks_;
+	private List<Bullet> bullets_;
 	private ItemContainer allMovings_;
 	
-	public ClientListener(int i, DataInputStream input, ObjectOutputStream output, ItemContainer allMovings) {
+	public ClientListener(int i, DataInputStream input, ObjectOutputStream output, 
+			ItemContainer allMovings, List<Tank> tanks, List<Bullet>bullets) {
+		this.tanks_ = tanks;
+		this.bullets_ = bullets;
 		this.clientIndex_ = i;
 		this.input_ = input;
 		this.output_ = output;
@@ -120,11 +143,32 @@ class ClientListener implements Runnable{
 				System.out.println(String.format("%d Received %d", this.clientIndex_,clientResponse));
 				if( clientResponse == 1 ) {
 					synchronized(allMovings_) {
-						allMovings_.items_.get(clientIndex_).y += 2.0;
+//						allMovings_.items_.get(clientIndex_).y += 2.0;
+						this.tanks_.get(clientIndex_).box.y += 2.0;
 					}
 					
 //					tcpS.send(Movings);
 //					int re = tcpS.receive();
+				}else if ( clientResponse == 5 ) {
+					float[] p = new float[2];
+					for ( int i = 0; i < 2; i++) {
+						p[i] = this.input_.readFloat();
+					}
+					float xmouse = p[0];
+					float ymouse = p[1];
+					Tank tank = this.tanks_.get(clientIndex_);
+					float xmain = tank.getx() + tank.size / 2;
+					float ymain = tank.gety() + tank.size / 2;
+					float k = (ymain - ymouse) / (xmain - xmouse);
+					float dx = (float) Math.sqrt(4*SPEED*SPEED /(1+k*k));
+					if(xmouse<xmain) dx=-dx;
+					float dy = k*dx;
+					
+					float size = 5;
+
+					
+					tank.newBullets.add(new Bullet(xmain, ymain, dx,dy, size));
+					
 				}
 			}
 		}catch (IOException e) {

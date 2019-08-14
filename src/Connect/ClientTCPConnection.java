@@ -5,6 +5,7 @@ import java.net.*;
 //import java.util.*;
 
 import client.Models.ItemContainer;
+import client.Models.Tank;
 import trying.BoxContainer;
 
 //import java.nio.charset.*;
@@ -74,6 +75,11 @@ public class ClientTCPConnection {
 	public void send(int signal) throws IOException {
 		// TODO Auto-generated method stub
 		this.output.writeInt(signal);
+		output.flush();
+	}
+	
+	public void sendFloat(float f) throws IOException {
+		this.output.writeFloat(f);
 		output.flush();
 	}
 
