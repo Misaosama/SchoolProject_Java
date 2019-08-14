@@ -9,7 +9,7 @@ import trying.BoxContainer;
 import java.io.IOException;
 
 	public class ServerTCPConnection {
-		private static final int DEFAULT_PORT = 8188;
+		private static final int DEFAULT_PORT = 8189;
 		
 		private ServerSocket serverSocket;
 		private Socket socket;
@@ -46,6 +46,7 @@ import java.io.IOException;
 			// TODO Auto-generated method stub
 			int signal = this.input.readInt();
 //			this.input.
+//			System.out.println(signal);
 			return signal;
 		}
 		

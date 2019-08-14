@@ -22,18 +22,22 @@ public class ServerMultiTest {
 //			tcpS.send(Movings);
 			ServerTCPConnectionHandler ch =  new ServerTCPConnectionHandler(tcpS, Movings);
 			Thread sThread = new Thread(ch);
-			sThread.start();
+//			sThread.start();
 			
-			
-			while(true) {
-				int clientResponse = tcpS.receive();
-//				System.out.println("Received");
-				if( clientResponse == 1 ) {
-					Movings.boxes_.get(0).moveDown();
-//					tcpS.send(Movings);
-//					int re = tcpS.receive();
+			try {
+				while(true) {
+					tcpS.send(Movings);
+					System.out.println("sent");
+					int r = tcpS.receive();
+					System.out.println(r);
+					TimeUnit.MILLISECONDS.sleep(30);
 				}
+			}catch(IOException | InterruptedException e) {
+				return;
 			}
+			
+			
+
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -56,27 +60,24 @@ class ServerTCPConnectionHandler implements Runnable{
 	@Override
 	public void run() {
 		
-//		try {
-//			this.connection_.connect();
 		try {
 			while(true) {
-//				System.out.println(allMovings_.boxes_.get(0).y);
-				this.connection_.send(allMovings_);
-				int r = this.connection_.receive();
-//				TimeUnit.MILLISECONDS.sleep(30);
+				int clientResponse = this.connection_.receive();
+//				System.out.println("Received");
+				if( clientResponse == 1 ) {
+					allMovings_.boxes_.get(0).moveDown();
+//					tcpS.send(Movings);
+//					int re = tcpS.receive();
+				}
 			}
-		}catch(IOException e) {
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
 			return;
 		}
 		
+
+		
 			
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		
 		
 	}

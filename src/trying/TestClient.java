@@ -8,78 +8,174 @@ import View.Box;
 import java.nio.charset.*;
 import trying.BoxContainer;
 
+//GUI related
+import static org.lwjgl.opengl.GL11.*;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+
+import Connect.ClientTCPConnection;
+
 public class TestClient {
 	
-	public static void main (String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
+	private static final int DISPLAY_WIDTH = 700;
+	private static final int DISPLAY_HEIGTH = 500;
+	private static final int FRAMES_PER_SECOND = 30;
+	private static final int MAP_WIDTH = 1500;
+	private static final int MAP_HEIGTH = 900;
+	
+	protected BoxContainer clientMovings_;
+	
+	public TestClient() {
+		clientMovings_ = new BoxContainer();
+	}
+	
+	public static void main(String[] args) throws InterruptedException {
+		TestClient mf = new TestClient();	
+//		ClientTCPConnection tcpC = new ClientTCPConnection("localhost");
+		DataStreamTestT testThread = new DataStreamTestT();
+		Thread t = new Thread(testThread);
+		t.start();
 		
-		String host_ = "localhost";
-		int DEFAULT_PORT = 8189;
-		Socket socket = new Socket(host_, DEFAULT_PORT);
-		InputStream inStream = socket.getInputStream();
-		OutputStream outStream = socket.getOutputStream();
 		
-//		Scanner input = new Scanner(inStream);
-//		PrintWriter output = new PrintWriter(new OutputStreamWriter(outStream, StandardCharsets.UTF_8), true /*autoFlush */);
-//		
-//		
-//		String message = input.nextLine();
-//		System.out.println(String.format("Message %s received.\n", message));
-//		
-//		for( int i = 0; i < 9; i++) {
-//			output.println(i);
-//			message = input.nextLine();
-//			System.out.println(String.format("Message %s received.\n", message));
-//		}
-//		
-//		output.println("BYE");
-		DataOutputStream  output = new DataOutputStream (outStream);
+//		ClientTCPConnection ch = new ClientTCPConnection(tcpC, mf.clientMovings_, mf );
+//		Thread cThread = new Thread(ch);
+//		cThread.start();
 		
-		try(	
-//				ObjectOutputStream oos = new ObjectOutputStream(outStream);
-				ObjectInputStream ois = new ObjectInputStream(inStream);) {
-			Box a = null;
-			System.out.println("Waiting for input");
-			a = (Box) ois.readObject(); 
-			
-			System.out.println("Object has been deserialized "); 
-	        System.out.println("width = " + a.w); 
-	        System.out.println("height = " + a.h);
-	        
-			
-			output.writeInt(1);
-//			oos.writeObject(a);
-//			oos.flush();
-			System.out.println("Client Sent int 1");
-			
-			BoxContainer bc1 = (BoxContainer) ois.readObject();
-			System.out.println("Object has been deserialized "); 
-	        
-			for ( int i = 0; i < bc1.nofBoxes_; i++) {
-				System.out.println("width = " + bc1.boxes_.get(i).w); 
-		        System.out.println("height = " + bc1.boxes_.get(i).h);
-			}
-	        
-		}catch (IOException e) {
+		
+		//GUI
+		try {
+			Display.setDisplayMode(new DisplayMode(DISPLAY_WIDTH, DISPLAY_HEIGTH));
+			Display.setResizable(true);
+			Display.create();
+
+		} catch (LWJGLException e) {
 			e.printStackTrace();
+		}
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, DISPLAY_WIDTH, DISPLAY_HEIGTH, 0, 1, -1);
+		glMatrixMode(GL_MODELVIEW);
+		
+		boolean up, left, right, down;
+		up =left = right = down = false;
+		
+		
+		
+		while (!Display.isCloseRequested()) {
+
+//			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+//				break;
+//			}
+			glClear(GL_COLOR_BUFFER_BIT);//GL_COLOR_BUFFER_BIT: import static org.lwjgl.opengl.GL11.*;
+			
+//			glTranslatef(-camera.xmov, -camera.ymov, 0);
+			glTranslatef(0, 0, 0);
+			
+			mf.render();
+			if (Display.isActive()) {
+				while (Keyboard.next()) {
+					
+					if (Keyboard.getEventKey() == Keyboard.KEY_S
+							|| Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
+						if (Keyboard.getEventKeyState()) {
+//							character.yVel = 5;
+							
+//							box.y-=30;
+//							System.out.println(mf.box.y);
+							down = true;
+						} else {
+							down = false;
+							if (!up) {
+//								character.yVel = 0;
+//								box.moveDown();
+							}
+						}
+					}else {
+//						character.xVel = 0;
+//						character.yVel = 0;
+					}
+					
+					
+				}
+			}
+			if(down) {
+//				mf.box.moveDown(); 
+//				try {
+////					synchronized(tcpC) {
+//						tcpC.send(1);
+////					}
+//					
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+			}
+			
+			
+			Display.update();
+			Display.sync(FRAMES_PER_SECOND);
 		}
 		
 
+		Display.destroy();
+		System.exit(0);
 		
+	}
+	
+	private void render() {
+		
+		synchronized(this.clientMovings_) {
+			for( Box box : this.clientMovings_.boxes_) {
+				drawObject(box);
+			}
+		}
+		
+		
+	}
+	
+	private void drawObject(Box box) {
+		glColor3f(box.r, box.g, box.b);
+		glBegin(GL_QUADS);
+			glVertex2f(box.x, box.y);
+			glVertex2f(box.x + box.w, box.y);
+			glVertex2f(box.x + box.w, box.y + box.h);
+			glVertex2f(box.x, box.y + box.h);
+		glEnd();
 	}
 	
 	
 }
 
-//class BoxContainer{
-//	public List<Box> boxes_;
-//	public int nofBoxes_;
-//	
-//	public BoxContainer() {
-//		
-//	}
-//	
-//	public void addBox( Box b1) {
-//		this.boxes_.add(b1);
-//	}
-//	
-//}
+class DataStreamTestT implements Runnable{
+	
+	public DataStreamTestT() {
+		
+	}
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		try {
+			Socket s = new Socket("localhost", 8189);
+			InputStream inStream = s.getInputStream();
+			DataInputStream di = new DataInputStream(inStream);
+			
+			while(true) {
+				int i = di.readInt();
+				System.out.println("Received from server: " + i);
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		while
+		
+	}
+	
+}
+

@@ -17,7 +17,7 @@ import trying.BoxContainer;
  *
  */
 public class ClientTCPConnection {
-	private static final int DEFAULT_PORT = 8188;
+	private static final int DEFAULT_PORT = 8189;
 	
 	private Socket socket;
 	private ObjectInputStream input;
@@ -68,7 +68,8 @@ public class ClientTCPConnection {
 	 
 	public void send(int signal) throws IOException {
 		// TODO Auto-generated method stub
-		this.output.writeInt(signal);;
+		this.output.writeInt(signal);
+		output.flush();
 	}
 
 	 

@@ -12,6 +12,9 @@ public class TestServer {
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		int port = 8189;
+		BoxContainer bc = new BoxContainer();
+		bc.addBox(new Box((float)10.0, (float)10.0, 30,23, (float)100.0, (float)100.0, (float)1.0, (long)123, 0 ) );
+		
 		
 		try (ServerSocket s = new ServerSocket(port)){
 			try (Socket incoming = s.accept()){
@@ -38,28 +41,32 @@ public class TestServer {
 //					}
 					
 					DataInputStream input = new DataInputStream (inStream);
+//					DataOutputStream output = new DataOutputStream(outStream);
 //					System.out.println("Serializing");
 					try( 	
 //							ObjectInputStream ois = new ObjectInputStream(incoming.getInputStream());
-							ObjectOutputStream oos = new ObjectOutputStream(incoming.getOutputStream()) ) {
+							ObjectOutputStream oos = new ObjectOutputStream(incoming.getOutputStream()) ) 
+										{
 						
-						Box a = new Box((float)10.0, (float)10.0, 30,30, (float)100.0, (float)100.0, (float)1.0, (long)123, 0 );
-						oos.writeObject(a);
-						oos.flush();
-			            System.out.println("Object has been serialized");
+//						Box a = new Box((float)10.0, (float)10.0, 30,30, (float)100.0, (float)100.0, (float)1.0, (long)123, 0 );
+//						oos.writeObject(a);
+//						oos.flush();
+//			            System.out.println("Object has been serialized");
 			            
+			            while(true) {
+			            	oos.writeObject(bc);
+			            	int a = input.readInt();
+			            }
 			            
-			            int aint = input.readInt();
-			            System.out.println("Received from client: " + aint);
 //			            Box b = (Box)ois.readObject();
 //			            System.out.println("Object has been deserialized "); 
 //				        System.out.println("b(float) = " + b.b); 
 //				        System.out.println("id = " + b.id);
 				        
-			            Box b = new Box((float)10.0, (float)10.0, 30,30, (float)100.0, (float)100.0, (float)1.0, (long)123, 0 );
-				        BoxContainer bc =  new BoxContainer();
-				        bc.addBox(a); bc.addBox(b);
-			            oos.writeObject(bc);
+//			            Box b = new Box((float)10.0, (float)10.0, 30,30, (float)100.0, (float)100.0, (float)1.0, (long)123, 0 );
+//				        BoxContainer bc =  new BoxContainer();
+//				        bc.addBox(a); bc.addBox(b);
+//			            oos.writeObject(bc);
 						
 					}catch (IOException e) {
 						e.printStackTrace();
@@ -80,11 +87,11 @@ class ServerTcp implements Runnable{
 	
 	public ServerTcp( BoxContainer bc ) {
 		this.allMovingObjects_ = bc;
+		this.allMovingObjects_.addBox(new Box((float)10.0, (float)10.0, 30,23, (float)100.0, (float)100.0, (float)1.0, (long)123, 0 ) );
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
 	}
 	
