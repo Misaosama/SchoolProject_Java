@@ -223,7 +223,7 @@ public class Main {
 		
 		drawItem(tank.box);
 		
-		for(Bullet b : tank.newBullets) {
+		for(Bullet b : tank.newBullets) { // show bullets in this tank
 			drawItem(b.box);
 		}
 		
