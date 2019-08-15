@@ -212,7 +212,7 @@ public class Simulator {
 		}
 		
 		
-		if(row >= map.length && col >= map[0].length-4) {
+		if(row >= map.length-2 && col >= map[0].length-2) {
 			return true;
 		}
 		else {
