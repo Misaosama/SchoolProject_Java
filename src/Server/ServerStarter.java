@@ -32,13 +32,11 @@ public class ServerStarter{
 	private int portNumber_;
 	private ItemContainer AllMovings_;
 	private List<Tank> players_;
-	private List<Bullet> allBullets_;
 	
 	public ServerStarter( int numberOfClients, int portNumber ) {
 		this.numberOfClients_ = numberOfClients;
 		this.portNumber_ = portNumber;
 		this.AllMovings_ = new ItemContainer();
-		this.allBullets_ = new ArrayList<Bullet>();
 		players_ = new ArrayList<Tank>();
 		
 	}
@@ -64,7 +62,7 @@ public class ServerStarter{
 			
 			for ( int i = 0; i < numberOfClients_; i++) {
 				ClientListener ch =  new ClientListener(i,tcpSM.getInputStream(i),tcpSM.getOutputStream(i), 
-						this.AllMovings_, this.players_, this.allBullets_);
+						this.AllMovings_, this.players_);
 				Thread sThread = new Thread(ch);
 				sThread.start();
 			}
@@ -120,13 +118,11 @@ class ClientListener implements Runnable{
 	private ObjectOutputStream output_;
 	private int clientIndex_;
 	private List<Tank> tanks_;
-	private List<Bullet> bullets_;
 	private ItemContainer allMovings_;
 	
 	public ClientListener(int i, DataInputStream input, ObjectOutputStream output, 
-			ItemContainer allMovings, List<Tank> tanks, List<Bullet>bullets) {
+			ItemContainer allMovings, List<Tank> tanks) {
 		this.tanks_ = tanks;
-		this.bullets_ = bullets;
 		this.clientIndex_ = i;
 		this.input_ = input;
 		this.output_ = output;
