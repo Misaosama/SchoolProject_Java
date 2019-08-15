@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JDialog;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -183,7 +185,10 @@ public class Main {
 			*/
 			handlingEvents();
 			//sendCharacter();
-			sim.update();
+			if(sim.update()) {
+
+				break;
+			}
 			update();
 			render();
 			

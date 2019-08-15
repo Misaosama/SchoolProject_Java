@@ -71,7 +71,7 @@ public class Simulator {
 		timer.schedule(timertask, 0, 30);
 	}
 	
-	public void update() {
+	public boolean update() {
 		tank.box.x += tank.dx;
 		tank.box.y += tank.dy;
 		
@@ -209,6 +209,14 @@ public class Simulator {
 				
 			}
 				
+		}
+		
+		
+		if(row >= map.length && col >= map[0].length-4) {
+			return true;
+		}
+		else {
+			return false;
 		}
 		
 		
