@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 //import java.util.*;
 
+import client.Main;
 import client.Models.ItemContainer;
 import client.Models.Tank;
 import trying.BoxContainer;
@@ -29,6 +30,7 @@ public class ClientTCPConnection {
 	private boolean myTurn_;
 //	private InputStream inputStream_;
 	private boolean ready_;
+	private int[][] map;
 	
 	/**
 	 * 
@@ -38,6 +40,7 @@ public class ClientTCPConnection {
 		host_ = host;
 		myTurn_ = true;
 		this.ready_ = false;
+		map = Main.readFile(new File("docs/map3.txt")) ;
 	}
 	
 	/**

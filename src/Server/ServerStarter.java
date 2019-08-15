@@ -1,6 +1,7 @@
 package Server;
 
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import Connect.ServerMultiTCPConnection;
+import client.Main;
 import client.Models.Bullet;
 //import Connect.ServerTCPConnection;
 import client.Models.Item;
@@ -32,12 +34,14 @@ public class ServerStarter{
 	private int portNumber_;
 	private ItemContainer AllMovings_;
 	private List<Tank> players_;
+	private int[][] map;
 	
 	public ServerStarter( int numberOfClients, int portNumber ) {
 		this.numberOfClients_ = numberOfClients;
 		this.portNumber_ = portNumber;
 		this.AllMovings_ = new ItemContainer();
 		players_ = new ArrayList<Tank>();
+		map = Main.readFile(new File("docs/map3.txt")) ;
 		
 	}
 	
