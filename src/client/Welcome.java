@@ -153,7 +153,7 @@ public class Welcome extends JFrame{
         		
 				Thread t = new Thread(new Runnable() {
 					public void run() {
-		        		Main main = new Main();	
+		        		Main main = new Main(Map);	
 		        		main.StartGame(); 
 		        		single_player_bu.setEnabled(true);
 		        		multi_player_bu.setEnabled(true);
@@ -238,7 +238,7 @@ public class Welcome extends JFrame{
 		help_img.setImage(help_img.getImage().getScaledInstance(200, 80,Image.SCALE_DEFAULT ));
 		help_bu.setIcon(help_img);
 		help_bu.addActionListener(new ActionListener() {
-	        //exit the game when onclick
+	        //present the help message the game when onclick
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	            final JDialog dialog = new JDialog(Welcome.this, "Help message", true);

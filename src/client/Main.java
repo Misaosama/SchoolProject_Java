@@ -63,14 +63,14 @@ public class Main {
 	Texture background;
 	
 	public static void main(String[] args) {
-		
-		Main main = new Main();
+		File f = new File("docs/map2");
+		Main main = new Main(f);
 		main.StartGame();
 
 	}
 
-	public Main(){
-		map = readFile(new File("docs/map2.txt")) ;
+	public Main(File f){
+		map = readFile(f) ;
 		generateItems();
 	}
 	
