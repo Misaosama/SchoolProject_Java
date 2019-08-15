@@ -59,8 +59,11 @@ public class Tank extends movingBox implements java.io.Serializable {
 	
 	public void beAttacked(int d) {
 		health -= d;
+		//System.out.println(health);
 		if(health <=0) { // do something if dead
-			
+			box.x = x;
+			box.y = y;
+			health = maxHealth;
 		}
 	}
 	
@@ -113,15 +116,28 @@ class enemy extends Tank{
 	}
 	
 	public void shot() {
-		newBullets.add(new Bullet(x+size/2, y+size/2, 0,8, 5));
-		newBullets.add(new Bullet(x+size/2, y+size/2, 0,-8, 5));
-		newBullets.add(new Bullet(x+size/2, y+size/2, -8,0, 5));
-		newBullets.add(new Bullet(x+size/2, y+size/2, 8,0, 5));
+		if(boss) {
+			newBullets.add(new Bullet(x+size/2, y+size/2, 0,8, 5));
+			newBullets.add(new Bullet(x+size/2, y+size/2, 0,-8, 5));
+			newBullets.add(new Bullet(x+size/2, y+size/2, -8,0, 5));
+			newBullets.add(new Bullet(x+size/2, y+size/2, 8,0, 5));
 			float s = (float) Math.sqrt(8) * 2;
 			newBullets.add(new Bullet(x+size/2, y+size/2, s,s, 5));
 			newBullets.add(new Bullet(x+size/2, y+size/2, s,-s, 5));
 			newBullets.add(new Bullet(x+size/2, y+size/2, -s,s, 5));
 			newBullets.add(new Bullet(x+size/2, y+size/2, -s,-s, 5));
+		} else {
+			newBullets.add(new Bullet(x+size/2, y+size/2, 0,8, 8));
+			newBullets.add(new Bullet(x+size/2, y+size/2, 0,-8, 8));
+			newBullets.add(new Bullet(x+size/2, y+size/2, -8,0, 8));
+			newBullets.add(new Bullet(x+size/2, y+size/2, 8,0, 8));
+			float s = (float) Math.sqrt(8) * 2;
+			newBullets.add(new Bullet(x+size/2, y+size/2, s,s, 8));
+			newBullets.add(new Bullet(x+size/2, y+size/2, s,-s, 8));
+			newBullets.add(new Bullet(x+size/2, y+size/2, -s,s, 8));
+			newBullets.add(new Bullet(x+size/2, y+size/2, -s,-s, 8));
+		}
+		
 
 			
 

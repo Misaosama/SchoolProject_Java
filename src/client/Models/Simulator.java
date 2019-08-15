@@ -68,7 +68,7 @@ public class Simulator {
 		
 		timer = new Timer();
 		timertask = new Helper();
-		timer.schedule(timertask, 0, 50);
+		timer.schedule(timertask, 0, 30);
 	}
 	
 	public void update() {
@@ -149,7 +149,9 @@ public class Simulator {
 				itr.remove();
 
 			} else if(map[r][c]==4 || map[r2][c]==4 ||
-			          map[r][c2]==4 || map[r2][c2]==4) {
+			          map[r][c2]==4 || map[r2][c2]==4 ||
+			          map[r][c]==5 || map[r2][c]==5 ||
+			          map[r][c2]==5 || map[r2][c2]==5) {
 				Iterator<Tank> eitr = enemies.iterator();
 				while(eitr.hasNext()) {
 					
@@ -172,8 +174,8 @@ public class Simulator {
 		//Check for enemies' bullets
 		
 		for(Tank e: enemies) {
-			if(timertask.TimerCount%20==0) {
-				if(Math.abs(row-e.r)<6&&Math.abs(col-e.c)<6) {
+			if(timertask.TimerCount%40==0) {
+				if(Math.abs(row-e.r)<10&&Math.abs(col-e.c)<10) {
 					e.shot();
 				}
 			}				
@@ -199,7 +201,10 @@ public class Simulator {
 				          map[r][c2]==1 || map[r2][c2]==1) {
 					it.remove();
 				} else if (r==row&&c==col || r==row2&&c==col || r==row&&c==col2 || r==row2&&c==col2){
+					it.remove();
+					//System.out.println("Here -----");
 					tank.beAttacked(10);
+					
 				}
 				
 			}
