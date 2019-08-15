@@ -110,7 +110,7 @@ public class Main {
 				if(map[i][j]==4||map[i][j]==5) {
 					// 
 					enemies.add(Tank.createEnemy(WALL_SIZE*j, WALL_SIZE*i, WALL_SIZE,
-							80, false, i, j));
+							80, map[i][j]==4, i, j));
 				}
 			}
 		}
@@ -160,7 +160,7 @@ public class Main {
 		
 //		obstacles = connections.getMapDetails();
 
-		tank = new Tank(3*WALL_SIZE,WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
+		tank = new Tank(3*WALL_SIZE,WALL_SIZE,TANK_SIZE,80,true,SPEED);
 		bullets = new ArrayList<Bullet>();
 		camera = new Camera(0, 0);
 		sim = new Simulator(tank, map.clone(), bullets, kits, enemies);
