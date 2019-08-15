@@ -107,7 +107,7 @@ public class ServerStarter{
 	
 	public static void main(String[] args) throws ClassNotFoundException {
 		
-        int nofClients = 1;
+        int nofClients = 3;
 		ServerStarter ss = new ServerStarter(nofClients, 8189);
 		ss.startServer();
 		
