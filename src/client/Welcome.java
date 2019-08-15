@@ -14,6 +14,11 @@ import View.MapEditor;
 public class Welcome extends JFrame{
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/** a main container*/
     public Container content_pane;
     

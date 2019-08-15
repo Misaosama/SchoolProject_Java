@@ -60,7 +60,7 @@ public class Tank extends movingBox implements java.io.Serializable {
 	public void beAttacked(int d) {
 		health -= d;
 		//System.out.println(health);
-		if(health <=0) { // do something if dead
+		if(health <=0 && size != 20) { // do something if dead and not enemiy
 			box.x = x;
 			box.y = y;
 			health = maxHealth;
