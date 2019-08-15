@@ -149,7 +149,14 @@ class ClientListener implements Runnable{
 					
 //					tcpS.send(Movings);
 //					int re = tcpS.receive();
-				}else if ( clientResponse == 5 ) {
+				}else if( clientResponse == 2 ) {
+					this.tanks_.get(clientIndex_).box.y -= 2.0;
+				}else if( clientResponse == 3 ) {
+					this.tanks_.get(clientIndex_).box.x -= 2.0;
+				}else if( clientResponse == 4 ) {
+					this.tanks_.get(clientIndex_).box.x += 2.0;
+				}
+				else if ( clientResponse == 5 ) {
 					float[] p = new float[2];
 					for ( int i = 0; i < 2; i++) {
 						p[i] = this.input_.readFloat();

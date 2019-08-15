@@ -111,40 +111,110 @@ public class ClientMultiTest {
 				
 				while (Keyboard.next()) {
 					
+//					if (Keyboard.getEventKey() == Keyboard.KEY_S
+//							|| Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
+//						if (Keyboard.getEventKeyState()) {
+//
+//							down = true;
+//						} else {
+//							down = false;
+//							if (!up) {
+////								character.yVel = 0;
+////								box.moveDown();
+//							}
+//						}
+//					}if (Keyboard.getEventKey() == Keyboard.KEY_S
+//							|| Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
+//						try {
+//							tcpC.send(2);
+//						} catch (IOException e) {
+//
+//							e.printStackTrace();
+//						}
+//					}if (Keyboard.getEventKey() == Keyboard.KEY_D
+//							|| Keyboard.getEventKey() == Keyboard.KEY_RIGHT) {
+//						try {
+//							tcpC.send(4);
+//						} catch (IOException e) {
+//
+//							e.printStackTrace();
+//						}
+//					}
+//					if (Keyboard.getEventKey() == Keyboard.KEY_A
+//							|| Keyboard.getEventKey() == Keyboard.KEY_LEFT) {
+//						try {
+//							tcpC.send(3);
+//						} catch (IOException e) {
+//
+//							e.printStackTrace();
+//						}
+//					}
+//					else {
+////						character.xVel = 0;
+////						character.yVel = 0;
+//					}
+					if (Keyboard.getEventKey() == Keyboard.KEY_W
+							|| Keyboard.getEventKey() == Keyboard.KEY_UP) {
+						if (Keyboard.getEventKeyState()) {
+							up = true;
+						} else {
+							up = false;
+						}
+					}
 					if (Keyboard.getEventKey() == Keyboard.KEY_S
 							|| Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
 						if (Keyboard.getEventKeyState()) {
-//							character.yVel = 5;
-							
-//							box.y-=30;
-//							System.out.println(mf.box.y);
 							down = true;
 						} else {
 							down = false;
-							if (!up) {
-//								character.yVel = 0;
-//								box.moveDown();
-							}
 						}
-					}else {
-//						character.xVel = 0;
-//						character.yVel = 0;
 					}
-					
+					if (Keyboard.getEventKey() == Keyboard.KEY_D
+							|| Keyboard.getEventKey() == Keyboard.KEY_RIGHT) {
+						if (Keyboard.getEventKeyState()) {
+							right = true;
+						} else {
+							right = false;
+						}
+					}
+					if (Keyboard.getEventKey() == Keyboard.KEY_A
+							|| Keyboard.getEventKey() == Keyboard.KEY_LEFT) {
+						if (Keyboard.getEventKeyState()) {
+							left = true;
+						} else {
+							left = false;
+						}
+					}
 					
 				}
 			}
-			if(down) {
-//				mf.box.moveDown(); 
-				try {
-//					synchronized(tcpC) {
-						tcpC.send(1);
-//					}
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+//			if(down) {
+////				mf.box.moveDown(); 
+//				try {
+////					synchronized(tcpC) {
+//						tcpC.send(1);
+////					}
+//					
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+			
+			try {
+				if(down) {
+					tcpC.send(1);
+				}else if (up) {
+					tcpC.send(2);
 				}
+				if(left) {
+					tcpC.send(3);
+				}else if (right) {
+					tcpC.send(4);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			
