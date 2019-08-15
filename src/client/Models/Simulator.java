@@ -156,7 +156,8 @@ public class Simulator {
 				while(eitr.hasNext()) {
 					
 					Tank enemy = eitr.next();
-					if(enemy.r == r || enemy.r == r2) {
+					if(enemy.r == r && enemy.c == c || enemy.r == r2 && enemy.c == c ||
+						enemy.r == r2 && enemy.c == c2 || enemy.r == r2 && enemy.c == c2	) {
 						enemy.beAttacked(10);
 						if(enemy.health<=0) {
 							eitr.remove();
