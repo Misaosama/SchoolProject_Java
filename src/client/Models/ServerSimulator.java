@@ -26,6 +26,7 @@ public class ServerSimulator {
 		for(Tank tank : tanks) {
 			tank.box.x+= tank.dx;
 			tank.box.y+=tank.dy;
+			//
 			
 			
 			
