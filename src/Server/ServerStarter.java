@@ -19,13 +19,19 @@ import client.Models.ItemContainer;
 import client.Models.ServerSimulator;
 import client.Models.Tank;
 
+/**
+ * This class is used to start the server. 
+ * It's responsible of containing all data the authoritative server needs to simulate
+ * the game, and the data to be sent to clients for their display.
+ * @author rongyi
+ * @version 1.0
+ *
+ */
 public class ServerStarter{
 	
 	private static final int WALL_SIZE = 15;
 	private static final int TANK_SIZE = 15;
-	
 	private static final int SPEED = 4;
-	
 	private int numberOfClients_;
 	private int portNumber_;
 	private ItemContainer AllMovings_;
@@ -33,6 +39,11 @@ public class ServerStarter{
 	private int[][] map;
 	private ServerSimulator simulator_;
 	
+	/**
+	 * 
+	 * @param numberOfClients
+	 * @param portNumber
+	 */
 	public ServerStarter( int numberOfClients, int portNumber ) {
 		this.numberOfClients_ = numberOfClients;
 		this.portNumber_ = portNumber;
@@ -43,6 +54,9 @@ public class ServerStarter{
 		simulator_ = new ServerSimulator(map, players_  ); 
 	}
 	
+	/**
+	 * Start this server
+	 */
 	public void startServer() {
 		
 		try {
@@ -65,7 +79,7 @@ public class ServerStarter{
 			}
 			
 			for ( int i = 0; i < numberOfClients_; i++) {
-				ClientListener ch =  new ClientListener(i,tcpSM.getInputStream(i),tcpSM.getOutputStream(i), 
+				ClientListener ch =  new ClientListener(i,tcpSM.getInputStream(i), 
 						 this.players_);
 				Thread sThread = new Thread(ch);
 				sThread.start();
@@ -112,6 +126,12 @@ public class ServerStarter{
 		
 	}
 	
+	/**
+	 * The main function to start the server.
+	 * @param args users used to input portNumber, etc.
+	 * @throws ClassNotFoundException
+	 * @throws UnknownHostException
+	 */
 	public static void main(String[] args) throws ClassNotFoundException, UnknownHostException {
 		
         int nofClients = 2;
@@ -121,21 +141,35 @@ public class ServerStarter{
 		ss.startServer();
 		
 	}
+	
 }
 
+/**
+ * A runnbale class functioning as a thread which constantly listens to a given client.
+ * @author rongyi
+ * @version 1.0
+ *
+ */
 class ClientListener implements Runnable{
 	private static final int SPEED = 4;
 	private DataInputStream input_;
-	private ObjectOutputStream output_;
+//	private ObjectOutputStream output_;
 	private int clientIndex_;
 	private List<Tank> tanks_;
 	
-	public ClientListener(int i, DataInputStream input, ObjectOutputStream output, 
+	/**
+	 * 
+	 * @param i the index of a given client this instance gets bind to.
+	 * @param input a DataInputStream to get integer signals from clients
+	 * @param output a ObjectOutputStream to send data 
+	 * @param tanks
+	 */
+	public ClientListener(int i, DataInputStream input,
 			 List<Tank> tanks) {
 		this.tanks_ = tanks;
 		this.clientIndex_ = i;
 		this.input_ = input;
-		this.output_ = output;
+//		this.output_ = output;
 	}
 	
 	
