@@ -14,7 +14,7 @@ public class ServerSimulator {
 	private int MAP_WIDTH ;
 	private int MAP_HEIGTH ;
 	
-	private static final int WALL_SIZE = 20;
+	private static final int WALL_SIZE = 15;
 	
 	
 	public ServerSimulator(int[][] m, List<Tank> t) {

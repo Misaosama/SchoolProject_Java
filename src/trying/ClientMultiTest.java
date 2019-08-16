@@ -31,7 +31,7 @@ public class ClientMultiTest {
 	private static final int MAP_HEIGTH = 900;
 	private static final int SPEED = 4;
 	
-	private static final int WALL_SIZE = 20;
+	private static final int WALL_SIZE = 15;
 	private static final int TANK_SIZE = 15;
 	
 	

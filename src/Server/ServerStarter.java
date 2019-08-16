@@ -28,7 +28,7 @@ public class ServerStarter{
 
 	private static final int FRAMES_PER_SECOND = 30;
 	
-	private static final int WALL_SIZE = 20;
+	private static final int WALL_SIZE = 15;
 	private static final int TANK_SIZE = 15;
 	
 	private static final int SPEED = 4;
