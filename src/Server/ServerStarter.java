@@ -20,8 +20,8 @@ import client.Models.ServerSimulator;
 import client.Models.Tank;
 
 public class ServerStarter{
-	private static final int DISPLAY_WIDTH = 700;
-	private static final int DISPLAY_HEIGTH = 500;
+	private static final int DISPLAY_WIDTH = 1000;
+	private static final int DISPLAY_HEIGTH = 1000;
 
 	private static final int MAP_WIDTH = 2000;
 	private static final int MAP_HEIGTH = 2000;
@@ -83,6 +83,11 @@ public class ServerStarter{
 				while(true) {
 					//simulate part.
 					simulator_.update();
+					//
+					for( Tank tank: this.players_) {
+						tank.dx = 0;
+						tank.dy = 0;
+					}
 					
 					//add all tanks and bullets
 					for( Tank player: this.players_) {
@@ -152,18 +157,21 @@ class ClientListener implements Runnable{
 				System.out.println(String.format("%d Received %d", this.clientIndex_,clientResponse));
 				if( clientResponse == 1 ) {
 					synchronized(allMovings_) {
-//						allMovings_.items_.get(clientIndex_).y += 2.0;
-						this.tanks_.get(clientIndex_).box.y += 2.0;
+//						this.tanks_.get(clientIndex_).box.y += 2.0;
+						this.tanks_.get(clientIndex_).dy += 4.0;
 					}
 					
 //					tcpS.send(Movings);
 //					int re = tcpS.receive();
 				}else if( clientResponse == 2 ) {
-					this.tanks_.get(clientIndex_).box.y -= 2.0;
+//					this.tanks_.get(clientIndex_).box.y -= 2.0;
+					this.tanks_.get(clientIndex_).dy -= 4.0;
 				}else if( clientResponse == 3 ) {
-					this.tanks_.get(clientIndex_).box.x -= 2.0;
+//					this.tanks_.get(clientIndex_).box.x -= 2.0;
+					this.tanks_.get(clientIndex_).dx -= 4.0;
 				}else if( clientResponse == 4 ) {
-					this.tanks_.get(clientIndex_).box.x += 2.0;
+//					this.tanks_.get(clientIndex_).box.x += 2.0;
+					this.tanks_.get(clientIndex_).dx += 4.0;
 				}
 				else if ( clientResponse == 5 ) {
 					float[] p = new float[2];
@@ -179,13 +187,10 @@ class ClientListener implements Runnable{
 					float dx = (float) Math.sqrt(4*SPEED*SPEED /(1+k*k));
 					if(xmouse<xmain) dx=-dx;
 					float dy = k*dx;
-					
 					float size = 5;
-
-					
 					tank.newBullets.add(new Bullet(xmain, ymain, dx/10,dy/10, size));
-					
 				}
+				
 			}
 		}catch (IOException e) {
 			return;
