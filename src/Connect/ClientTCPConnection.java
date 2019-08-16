@@ -24,12 +24,7 @@ public class ClientTCPConnection {
 	private Socket socket;
 	private ObjectInputStream input;
 	private DataOutputStream output;
-	private String GUIMessage_;
 	private String host_;
-	private boolean myTurn_;
-//	private InputStream inputStream_;
-	private boolean ready_;
-	private int[][] map;
 	private int DEFAULT_PORT;
 	
 	/**
@@ -39,16 +34,16 @@ public class ClientTCPConnection {
 	public ClientTCPConnection(String host, int portnum) {
 		DEFAULT_PORT = portnum;
 		host_ = host;
-		myTurn_ = true;
-		this.ready_ = false;
-		map = Main.readFile(new File("docs/map3.txt")) ;
+//		map = Main.readFile(new File("docs/map3.txt")) ;
 	}
 	
-	/**
-	 * Java doc for overridden functions is in the interface file.
-	 */
+
 	
-	 
+	/**
+	 * connect to a server. 
+	 * @throws IOException if conneciton fails
+	 * @throws java.net.ConnectException a specific situation needs to be handled.
+	 */
 	public void connect() throws IOException,java.net.ConnectException {
 		// TODO Auto-generated method stub
 		this.socket = new Socket(host_, DEFAULT_PORT);
@@ -58,10 +53,14 @@ public class ClientTCPConnection {
 		this.input = new ObjectInputStream(inStream);
 //		this.output = new PrintWriter(new OutputStreamWriter(outStream, StandardCharsets.UTF_8), true /*autoFlush */);
 		this.output = new DataOutputStream(outStream);
-		GUIMessage_ = "Incoming connection from a client at " + socket.getRemoteSocketAddress().toString() + " accepted.\n" ;
 	}
 
-	 
+	 /**
+	  * get data from server
+	  * @return an ItemContainer object just received from server.
+	  * @throws ClassNotFoundException : if de-serialization fails.
+	  * @throws IOException if connection fails.
+	  */
 	public ItemContainer receive() throws ClassNotFoundException, IOException {
 		// TODO Auto-generated method stub
 //		this.input.e
@@ -70,87 +69,36 @@ public class ClientTCPConnection {
 		return allMovings;
 	}
 	
+	/**
+	 * 
+	 * @return the Integer received from server(for client's id)
+	 * @throws ClassNotFoundException : has to through for de-serialization
+	 * @throws IOException: connection problems
+	 */
 	public Integer receiveID() throws ClassNotFoundException, IOException {
 		Integer id = (Integer)this.input.readObject();
 		return id;
 	}
 
-	 
+	/**
+	 * send client input signal to server 
+	 * @param signal : the player input which needs to be sent to the server.
+	 * @throws IOException: send fails because of network issues.
+	 */
 	public void send(int signal) throws IOException {
 		// TODO Auto-generated method stub
 		this.output.writeInt(signal);
 		output.flush();
 	}
 	
+	/**
+	 * send floats to the server(mouse position)
+	 * @param f: a float used to represent a mouse position.
+	 * @throws IOException: send fails because of network issues.
+	 */
 	public void sendFloat(float f) throws IOException {
 		this.output.writeFloat(f);
 		output.flush();
-	}
-
-	 
-	public String getGUIMessage() {
-		// TODO Auto-generated method stub
-		return this.GUIMessage_;
-	}
-	
-	public boolean isConnectionClosed() {
-		return this.socket.isClosed();
-	}
-
-	 
-	public boolean myTurn() {
-		return this.myTurn_;
-	}
-
-
-	public void myTurnNow( boolean turn) {
-		// TODO Auto-generated method stub
-		this.myTurn_ = turn;
-		
-	}
-
-
-	 
-	public boolean isConnected() {
-		// TODO Auto-generated method stub
-		return this.socket.isConnected();
-	}
-
-	 
-	/**
-	 *
-	 */
-	public boolean readyForAttack() {
-		return ready_;
-	}
-	
-	/**
-	 * set whether local finished placing ships.
-	 */
-	 
-	public void shipPlaced(boolean placed) {
-		this.ready_ = placed;
-//		if(ready_ == true)
-//			System.out.println("\nlocal finished placing ships\n");
-		
-	}
-	
-	/**
-	 * do nothing here because this class is a client. adding it just to implement 
-	 * IConnectable interface. Server class will close server socket so that it free the resources.
-	 */
-	 
-	public void closeSocket() {
-		
-	}
-	
-	/**
-	 * @return whether this is a client.
-	 */
-	
-	public boolean isClient() {
-		// TODO Auto-generated method stub
-		return true;
 	}
 
 }
