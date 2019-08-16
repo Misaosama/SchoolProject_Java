@@ -33,11 +33,14 @@ public class ServerSimulator {
 			
 			if(tank.box.x<0 || tank.box.x>MAP_WIDTH) tank.box.x-=tank.dx;
 			if(tank.box.y<0 || tank.box.y>MAP_HEIGTH) tank.box.y-=tank.dy;
+
 			
 			int row = (int)(tank.box.y)/WALL_SIZE;
 			int col = (int)(tank.box.x)/WALL_SIZE;
 			int row2 = (int)(tank.box.y+tank.size)/WALL_SIZE;
 			int col2 = (int)(tank.box.x+tank.size)/WALL_SIZE;
+			//System.out.println(row + " is " +tank.box.y);
+			//System.out.println(col + " is " +tank.box.x);
 			
 			int maxRow = map.length - 1;
 			int maxCol = map[0].length - 1;
@@ -46,6 +49,11 @@ public class ServerSimulator {
 					tank.box.x -= tank.dx;
 					tank.box.y -= tank.dy;
 				}
+			}else if(map[row][col]==1 || map[row2][col]==1 ||
+			          map[row][col2]==1 || map[row2][col2]==1) {
+				tank.box.x -= tank.dx;
+				tank.box.y -= tank.dy;
+
 			}
 
 			
@@ -92,10 +100,12 @@ public class ServerSimulator {
 						
 						int er = (int)(e.box.y)/WALL_SIZE;
 						int ec = (int)(e.box.x)/WALL_SIZE;
+						int er2 = (int)((e.box.y+e.size)/WALL_SIZE);
+						int ec2 = (int)((e.box.x+e.size)/WALL_SIZE);
 
 						
 						if(er == r && ec == c || er == r2 && ec == c ||
-								er== r2 && ec == c2 || er== r2 && ec == c2	) {
+								er2== r2 && ec == c2 || er2== r2 && ec2 == c2	) {
 								e.beAttacked(10);
 								System.out.println("REMOVE-----5");
 								itr.remove();
