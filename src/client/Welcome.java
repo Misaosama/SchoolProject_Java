@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+
 import javax.swing.*;
 
 import View.MapEditor;
@@ -238,6 +240,15 @@ public class Welcome extends JFrame{
 	                	
 	        			if(good_input && port_num!=0){
 	        				//Start multiplayer game
+	        				//ip, port_num
+	        				MultiplayerClient mc = new MultiplayerClient(port_num, ip);
+	        				try {
+								mc.ClientStart();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+	        				
 	        			}else {
 	        				JOptionPane.showMessageDialog(null, "invalid entry, try again");
 	        				ip_entry.setText(""); 

@@ -20,7 +20,7 @@ import trying.BoxContainer;
  *
  */
 public class ClientTCPConnection {
-	private static final int DEFAULT_PORT = 8189;
+//	private static final int DEFAULT_PORT = 8189;
 	
 	private Socket socket;
 	private ObjectInputStream input;
@@ -31,12 +31,14 @@ public class ClientTCPConnection {
 //	private InputStream inputStream_;
 	private boolean ready_;
 	private int[][] map;
+	private int DEFAULT_PORT;
 	
 	/**
 	 * 
 	 * @param host : a string containing host's address or name the user wants to connect to
 	 */
-	public ClientTCPConnection(String host) {
+	public ClientTCPConnection(String host, int portnum) {
+		DEFAULT_PORT = portnum;
 		host_ = host;
 		myTurn_ = true;
 		this.ready_ = false;

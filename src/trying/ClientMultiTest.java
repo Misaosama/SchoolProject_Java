@@ -64,7 +64,7 @@ public class ClientMultiTest {
 		
 		if(ip.equals(""))
 			ip = "localhost";
-		ClientTCPConnection tcpC = new ClientTCPConnection(ip); //"localhost");
+		ClientTCPConnection tcpC = new ClientTCPConnection(ip, 8189); //"localhost");
 		
 		try {
 			tcpC.connect();
