@@ -21,6 +21,7 @@ public class ServerSimulator {
 		map = m;
 		tanks = t;
 		MAP_WIDTH = map[0].length*WALL_SIZE;
+		MAP_HEIGTH = map.length*WALL_SIZE;
 		
 	}
 	
@@ -46,15 +47,71 @@ public class ServerSimulator {
 					tank.box.y -= tank.dy;
 				}
 			}
+
 			
 			
 			
 			
 			
 			
-			for(Bullet b : tank.newBullets) {
-				b.box.x+= b.dx;
-				b.box.y+= b.dy;
+			Iterator<Bullet> itr =tank.newBullets.iterator();
+			while (itr.hasNext()) {
+				Bullet b = itr.next();
+				b.box.x+=b.dx;
+				b.box.y+=b.dy;
+				
+				if(b.box.x<0 || b.box.x>MAP_WIDTH) {
+					System.out.println("REMOVE-----1");
+					itr.remove();
+					break;
+				}
+				if(b.box.y<0 || b.box.y>MAP_HEIGTH) {
+					System.out.println(b.box.y);
+					itr.remove();
+					break;
+				}
+				
+				int r = (int)((b.box.y)/WALL_SIZE);
+				int c = (int)((b.box.x)/WALL_SIZE);
+				int r2 = (int)((b.box.y+b.size)/WALL_SIZE);
+				int c2 = (int)((b.box.x+b.size)/WALL_SIZE);
+				
+				if(r2 > maxRow || c2 > maxRow) {
+					if(r2>maxRow+2||c2>maxCol+3) {
+						System.out.println("REMOVE-----3");
+						itr.remove();
+					}
+				} else if(map[r][c]==1 || map[r2][c]==1 ||
+				          map[r][c2]==1 || map[r2][c2]==1) { // if bullet hit a wall
+					System.out.println("REMOVE-----4");
+					itr.remove();
+
+				} else {
+					for(Tank e : tanks) {
+						if(e==tank) continue; // skip it self
+						
+						int er = (int)(e.box.y)/WALL_SIZE;
+						int ec = (int)(e.box.x)/WALL_SIZE;
+
+						
+						if(er == r && ec == c || er == r2 && ec == c ||
+								er== r2 && ec == c2 || er== r2 && ec == c2	) {
+								e.beAttacked(10);
+								System.out.println("REMOVE-----5");
+								itr.remove();
+								break;
+								
+						}
+						
+						
+						
+						
+						
+					}
+					
+					
+					
+				}
 			}
 		}
 		
