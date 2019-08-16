@@ -21,6 +21,15 @@ public class ServerSimulator {
 		for(Tank tank : tanks) {
 			tank.box.x+= tank.dx;
 			tank.box.y+=tank.dy;
+			
+			
+			
+			
+			
+			for(Bullet b : tank.newBullets) {
+				b.box.x+= b.dx;
+				b.box.y+= b.dy;
+			}
 		}
 		
 		
