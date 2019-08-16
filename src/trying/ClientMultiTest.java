@@ -119,48 +119,6 @@ public class ClientMultiTest {
 				
 				while (Keyboard.next()) {
 					
-//					if (Keyboard.getEventKey() == Keyboard.KEY_S
-//							|| Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
-//						if (Keyboard.getEventKeyState()) {
-//
-//							down = true;
-//						} else {
-//							down = false;
-//							if (!up) {
-////								character.yVel = 0;
-////								box.moveDown();
-//							}
-//						}
-//					}if (Keyboard.getEventKey() == Keyboard.KEY_S
-//							|| Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
-//						try {
-//							tcpC.send(2);
-//						} catch (IOException e) {
-//
-//							e.printStackTrace();
-//						}
-//					}if (Keyboard.getEventKey() == Keyboard.KEY_D
-//							|| Keyboard.getEventKey() == Keyboard.KEY_RIGHT) {
-//						try {
-//							tcpC.send(4);
-//						} catch (IOException e) {
-//
-//							e.printStackTrace();
-//						}
-//					}
-//					if (Keyboard.getEventKey() == Keyboard.KEY_A
-//							|| Keyboard.getEventKey() == Keyboard.KEY_LEFT) {
-//						try {
-//							tcpC.send(3);
-//						} catch (IOException e) {
-//
-//							e.printStackTrace();
-//						}
-//					}
-//					else {
-////						character.xVel = 0;
-////						character.yVel = 0;
-//					}
 					if (Keyboard.getEventKey() == Keyboard.KEY_W
 							|| Keyboard.getEventKey() == Keyboard.KEY_UP) {
 						if (Keyboard.getEventKeyState()) {
