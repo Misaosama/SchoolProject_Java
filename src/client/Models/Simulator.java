@@ -132,8 +132,14 @@ public class Simulator {
 			b.box.x+=b.dx;
 			b.box.y+=b.dy;
 			
-			if(b.box.x<0 || b.box.x>MAP_WIDTH) itr.remove();
-			if(b.box.y<0 || b.box.y>MAP_HEIGTH) itr.remove();
+			if(b.box.x<0 || b.box.x>MAP_WIDTH) {
+				itr.remove();
+				break;
+			}
+			if(b.box.y<0 || b.box.y>MAP_HEIGTH) {
+				itr.remove();
+				break;
+			}
 			
 			int r = (int)((b.box.y)/WALL_SIZE);
 			int c = (int)((b.box.x)/WALL_SIZE);

@@ -1,13 +1,18 @@
 package trying;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import Connect.ClientTCPConnection;
 import View.Box;
+import client.Main;
 import client.Models.Bullet;
 import client.Models.Item;
 import client.Models.ItemContainer;
+import client.Models.ItemFactory;
 
 //GUI related
 import static org.lwjgl.opengl.GL11.*;
@@ -26,11 +31,30 @@ public class ClientMultiTest {
 	private static final int MAP_HEIGTH = 900;
 	private static final int SPEED = 4;
 	
+	private static final int WALL_SIZE = 20;
+	private static final int TANK_SIZE = 15;
+	
+	
+	private List<Item> walls;
+	private int[][] map;
+	
 	protected ItemContainer clientMovings_;
 	
 	public ClientMultiTest() {
 		clientMovings_ = new ItemContainer();
+		map = Main.readFile(new File("docs/map3.txt")) ;
+		
+		walls = new ArrayList<Item>();
+		for(int i=0;i<map.length;i++) {
+			for(int j=0;j<map[0].length;j++) {
+				if(map[i][j]==1) {
+					walls.add(ItemFactory.createItem(1, WALL_SIZE*j, WALL_SIZE*i,
+							WALL_SIZE, WALL_SIZE,i,j));
+				}
+			}
+		}
 	}
+	
 	
 	public static void main(String[] args) throws InterruptedException {
 		ClientMultiTest mf = new ClientMultiTest();	
@@ -200,6 +224,10 @@ public class ClientMultiTest {
 		synchronized(this.clientMovings_) {
 			for( Item item : this.clientMovings_.items_) {
 				drawObject(item);
+			}
+			
+			for(Item wall : walls) {
+				drawObject(wall);
 			}
 		}
 		
