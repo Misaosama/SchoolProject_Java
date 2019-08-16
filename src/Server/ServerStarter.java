@@ -66,7 +66,7 @@ public class ServerStarter{
 			
 			for ( int i = 0; i < numberOfClients_; i++) {
 				ClientListener ch =  new ClientListener(i,tcpSM.getInputStream(i),tcpSM.getOutputStream(i), 
-						this.AllMovings_, this.players_);
+						 this.players_);
 				Thread sThread = new Thread(ch);
 				sThread.start();
 			}
@@ -129,15 +129,13 @@ class ClientListener implements Runnable{
 	private ObjectOutputStream output_;
 	private int clientIndex_;
 	private List<Tank> tanks_;
-	private ItemContainer allMovings_;
 	
 	public ClientListener(int i, DataInputStream input, ObjectOutputStream output, 
-			ItemContainer allMovings, List<Tank> tanks) {
+			 List<Tank> tanks) {
 		this.tanks_ = tanks;
 		this.clientIndex_ = i;
 		this.input_ = input;
 		this.output_ = output;
-		this.allMovings_ = allMovings;
 	}
 	
 	
@@ -149,21 +147,14 @@ class ClientListener implements Runnable{
 				int clientResponse = this.input_.readInt();
 				System.out.println(String.format("%d Received %d", this.clientIndex_,clientResponse));
 				if( clientResponse == 1 ) {
-					synchronized(allMovings_) {
-//						this.tanks_.get(clientIndex_).box.y += 2.0;
+//					synchronized(allMovings_) {
 						this.tanks_.get(clientIndex_).dy += 4.0;
-					}
-					
-//					tcpS.send(Movings);
-//					int re = tcpS.receive();
+//					}
 				}else if( clientResponse == 2 ) {
-//					this.tanks_.get(clientIndex_).box.y -= 2.0;
 					this.tanks_.get(clientIndex_).dy -= 4.0;
 				}else if( clientResponse == 3 ) {
-//					this.tanks_.get(clientIndex_).box.x -= 2.0;
 					this.tanks_.get(clientIndex_).dx -= 4.0;
 				}else if( clientResponse == 4 ) {
-//					this.tanks_.get(clientIndex_).box.x += 2.0;
 					this.tanks_.get(clientIndex_).dx += 4.0;
 				}
 				else if ( clientResponse == 5 ) {
