@@ -20,13 +20,6 @@ import client.Models.ServerSimulator;
 import client.Models.Tank;
 
 public class ServerStarter{
-	private static final int DISPLAY_WIDTH = 1000;
-	private static final int DISPLAY_HEIGTH = 1000;
-
-	private static final int MAP_WIDTH = 2000;
-	private static final int MAP_HEIGTH = 2000;
-
-	private static final int FRAMES_PER_SECOND = 30;
 	
 	private static final int WALL_SIZE = 15;
 	private static final int TANK_SIZE = 15;
