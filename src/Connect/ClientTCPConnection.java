@@ -101,6 +101,11 @@ public class ClientTCPConnection {
 		output.flush();
 	}
 	
+	/**
+	 * close the socket and release its resources, called after a client closes its multi-player
+	 * window.
+	 * @throws IOException networking issues
+	 */
 	public void disconnect() throws IOException {
 		this.socket.close();
 	}

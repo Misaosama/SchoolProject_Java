@@ -251,9 +251,9 @@ class ClientTCPConnectionHandler implements Runnable{
 			}
 				
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		
 	}
