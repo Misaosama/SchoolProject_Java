@@ -39,8 +39,7 @@ public class ServerSimulator {
 			int col = (int)(tank.box.x)/WALL_SIZE;
 			int row2 = (int)(tank.box.y+tank.size)/WALL_SIZE;
 			int col2 = (int)(tank.box.x+tank.size)/WALL_SIZE;
-			//System.out.println(row + " is " +tank.box.y);
-			//System.out.println(col + " is " +tank.box.x);
+
 			
 			int maxRow = map.length - 1;
 			int maxCol = map[0].length - 1;
@@ -69,12 +68,10 @@ public class ServerSimulator {
 				b.box.y+=b.dy;
 				
 				if(b.box.x<0 || b.box.x>MAP_WIDTH) {
-					System.out.println("REMOVE-----1");
 					itr.remove();
 					break;
 				}
 				if(b.box.y<0 || b.box.y>MAP_HEIGTH) {
-					System.out.println(b.box.y);
 					itr.remove();
 					break;
 				}
@@ -86,12 +83,10 @@ public class ServerSimulator {
 				
 				if(r2 > maxRow || c2 > maxRow) {
 					if(r2>maxRow+2||c2>maxCol+3) {
-						System.out.println("REMOVE-----3");
 						itr.remove();
 					}
 				} else if(map[r][c]==1 || map[r2][c]==1 ||
 				          map[r][c2]==1 || map[r2][c2]==1) { // if bullet hit a wall
-					System.out.println("REMOVE-----4");
 					itr.remove();
 
 				} else {
@@ -107,7 +102,6 @@ public class ServerSimulator {
 						if(er == r && ec == c || er == r2 && ec == c ||
 								er2== r2 && ec == c2 || er2== r2 && ec2 == c2	) {
 								e.beAttacked(10);
-								System.out.println("REMOVE-----5");
 								itr.remove();
 								break;
 								
