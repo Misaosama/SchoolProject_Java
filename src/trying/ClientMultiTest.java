@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import Connect.ClientTCPConnection;
-import View.Box;
 import client.Main;
-import client.Models.Bullet;
 import client.Models.Item;
 import client.Models.ItemContainer;
 import client.Models.ItemFactory;

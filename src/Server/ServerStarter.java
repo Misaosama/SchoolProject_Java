@@ -56,11 +56,11 @@ public class ServerStarter{
 			//Generate tanks
 			for ( int i = 0 ; i < numberOfClients_; i++) {
 				if( i == 1) {
-					Tank tank = new Tank(8*WALL_SIZE,8*WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
+					Tank tank = new Tank(36*WALL_SIZE,36*WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
 					this.players_.add(tank);
 					continue;
 				}
-				Tank tank =	new Tank(4*WALL_SIZE,4*WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
+				Tank tank =	new Tank(2*WALL_SIZE,2*WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
 				this.players_.add(tank);
 			}
 			
@@ -99,7 +99,7 @@ public class ServerStarter{
 //					int rp = 0;
 					this.AllMovings_.clearContainer();
 					
-					TimeUnit.MILLISECONDS.sleep(1);
+					TimeUnit.MILLISECONDS.sleep(10);
 				}
 			}catch( InterruptedException e) {
 				return;
@@ -181,7 +181,7 @@ class ClientListener implements Runnable{
 					if(xmouse<xmain) dx=-dx;
 					float dy = k*dx;
 					float size = 5;
-					tank.newBullets.add(new Bullet(xmain, ymain, dx/10,dy/10, size));
+					tank.newBullets.add(new Bullet(xmain, ymain, dx/2,dy/2, size));
 				}
 				
 			}
