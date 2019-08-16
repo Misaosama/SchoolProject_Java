@@ -114,7 +114,7 @@ public class ServerStarter{
 	
 	public static void main(String[] args) throws ClassNotFoundException, UnknownHostException {
 		
-        int nofClients = 3;
+        int nofClients = 2;
 		ServerStarter ss = new ServerStarter(nofClients, 8189);
 		InetAddress localHostAddress = InetAddress.getLocalHost();
 		System.out.println( localHostAddress );
