@@ -100,6 +100,9 @@ public class ClientTCPConnection {
 		this.output.writeFloat(f);
 		output.flush();
 	}
-
+	
+	public void disconnect() throws IOException {
+		this.socket.close();
+	}
 }
 

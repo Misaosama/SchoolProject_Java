@@ -179,7 +179,7 @@ public class MultiplayerClient {
 					Display.update();
 					Display.sync(FRAMES_PER_SECOND);
 				}
-			
+			tcpC.disconnect();
 			Display.destroy();
 		
 	}
