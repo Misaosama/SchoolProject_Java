@@ -244,10 +244,14 @@ public class Welcome extends JFrame{
 	        				MultiplayerClient mc = new MultiplayerClient(port_num, ip);
 	        				try {
 								mc.ClientStart();
-							} catch (IOException e1) {
+							} catch (IOException e1 ) {
 								// TODO Auto-generated catch block
-								e1.printStackTrace();
+//								e1.printStackTrace();
 		        				JOptionPane.showMessageDialog(null, "cannot connect to server, try again");
+		        				ip_entry.setText(""); 
+		        				port_entry.setText("");
+							}catch(java.lang.IllegalArgumentException ae) {
+								JOptionPane.showMessageDialog(null, "cannot connect to server, try again");
 		        				ip_entry.setText(""); 
 		        				port_entry.setText("");
 							}

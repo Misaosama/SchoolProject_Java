@@ -50,7 +50,7 @@ public class ClientTCPConnection {
 	 */
 	
 	 
-	public void connect() throws IOException {
+	public void connect() throws IOException,java.net.ConnectException {
 		// TODO Auto-generated method stub
 		this.socket = new Socket(host_, DEFAULT_PORT);
 		InputStream inStream = socket.getInputStream();
