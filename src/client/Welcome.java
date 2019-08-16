@@ -247,6 +247,9 @@ public class Welcome extends JFrame{
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
+		        				JOptionPane.showMessageDialog(null, "cannot connect to server, try again");
+		        				ip_entry.setText(""); 
+		        				port_entry.setText("");
 							}
 	        				
 	        			}else {
