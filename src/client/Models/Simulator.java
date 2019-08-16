@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 
 
@@ -41,6 +42,32 @@ class Helper extends TimerTask
     }
 } 
 
+class theWorld implements Runnable{
+	private Helper timetask;
+	private Timer time;
+	
+	public theWorld(Helper t, Timer ti) {
+		timetask = t;
+		time = ti;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		time.cancel();
+		try {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		timetask = new Helper();
+		time = new Timer();
+		time.schedule(timetask, 0, 30);
+	}
+	
+}
+
 public class Simulator {
 	
 	private static final int MAP_WIDTH = 2000;
@@ -57,6 +84,8 @@ public class Simulator {
 	private Timer timer;
 	private Helper timertask;
 	
+	private theWorld w;
+	
 	public Simulator(Tank t, int[][] m, 
 			ArrayList<Bullet> b, ArrayList<Item> k, ArrayList<Tank> e ) {
 		tank = t;
@@ -68,7 +97,32 @@ public class Simulator {
 		
 		timer = new Timer();
 		timertask = new Helper();
+		w = new theWorld(timertask, timer);
 		timer.schedule(timertask, 0, 30);
+	}
+	
+	public void stopTime() {
+		timertask.setCount(-300);
+	}
+	
+	public void flash() {
+		int row = (int)(tank.box.y)/WALL_SIZE;
+		int col = (int)(tank.box.x)/WALL_SIZE;
+		int row2 = (int)(tank.box.y+tank.size)/WALL_SIZE;
+		int col2 = (int)(tank.box.x+tank.size)/WALL_SIZE;
+		while(map[row][col]==1 || map[row2][col]==1 ||
+		          map[row][col2]==1 || map[row2][col2]==1) {
+			row = (int)(tank.box.y)/WALL_SIZE;
+			col = (int)(tank.box.x)/WALL_SIZE;
+			row2 = (int)(tank.box.y+tank.size)/WALL_SIZE;
+			col2 = (int)(tank.box.x+tank.size)/WALL_SIZE;
+			tank.box.x+=20;
+			tank.box.y+=20;
+		}
+	}
+	
+	public boolean quest() {
+		return enemies.isEmpty();
 	}
 	
 	public boolean update() {
@@ -181,7 +235,7 @@ public class Simulator {
 		//Check for enemies' bullets
 		
 		for(Tank e: enemies) {
-			if(timertask.TimerCount%40==0) {
+			if(timertask.TimerCount%40==0 && timertask.TimerCount >=0) {
 				if(Math.abs(row-e.r)<10&&Math.abs(col-e.c)<10) {
 					e.shot();
 				}
