@@ -6,7 +6,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/**
+ * This class does simulation for the multi-player server.
+ * @author rongyi
+ * @version 1.0
+ *
+ */
 public class ServerSimulator {
 	private int[][] map;
 	private List<Tank> tanks;
@@ -16,7 +21,11 @@ public class ServerSimulator {
 	
 	private static final int WALL_SIZE = 15;
 	
-	
+	/**
+	 * 
+	 * @param m : map
+	 * @param t : list of tanks(players) in current game.
+	 */
 	public ServerSimulator(int[][] m, List<Tank> t) {
 		map = m;
 		tanks = t;
@@ -25,6 +34,10 @@ public class ServerSimulator {
 		
 	}
 	
+	/**
+	 * update all objects status in one step.
+	 * @return : always return false
+	 */
 	public boolean update() {
 		for(Tank tank : tanks) {
 			tank.box.x+= tank.dx;

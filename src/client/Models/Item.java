@@ -1,5 +1,11 @@
 package client.Models;
 
+/**
+ * All basic items for objects.
+ * @author rongyi
+ * @version 1.0
+ *
+ */
 public class Item implements java.io.Serializable {
 	public float c1,c2,c3;
 
@@ -9,6 +15,15 @@ public class Item implements java.io.Serializable {
 	
 	public int r, c;
 	
+	/**
+	 * 
+	 * @param x : current position
+	 * @param y : current position
+	 * @param width : width
+	 * @param height : height
+	 * @param i : initial position
+	 * @param j : initial position
+	 */
 	public Item(float x, float y, float width, float height, int i, int j ) {
 		this.x = x;
 		this.y = y;

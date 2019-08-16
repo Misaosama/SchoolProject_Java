@@ -2,12 +2,11 @@ package client.Models;
 
 import java.io.Serializable;
 
-//import javax.xml.bind.annotation.XmlAccessType;
-//import javax.xml.bind.annotation.XmlAccessorType;
-//import javax.xml.bind.annotation.XmlRootElement;
-//
-//@XmlRootElement
-//@XmlAccessorType(XmlAccessType.FIELD)
+/**
+ * Bullets class, emitted by tanks.
+ * @author rongyi
+ *
+ */
 public class Bullet extends movingBox implements java.io.Serializable{
 	public float dx;
 	public float dy;
@@ -16,6 +15,14 @@ public class Bullet extends movingBox implements java.io.Serializable{
 	
 	public movingItem box;
 	
+	/**
+	 * 
+	 * @param x : current position
+	 * @param y : current position
+	 * @param dx : speed
+	 * @param dy : speed
+	 * @param size : size as a square.
+	 */
 	public Bullet(float x, float y, float dx, float dy, float size){
 		super(x,y);
 		this.x = x;

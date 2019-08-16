@@ -1,5 +1,10 @@
 package client.Models;
 
+/**
+ * to generate Wall, mKit or sKit.
+ * @author rongyi
+ *
+ */
 public class ItemFactory {
 	
 	public static Item createItem(int id,float x, float y, float w, float h, int i, int j) {
