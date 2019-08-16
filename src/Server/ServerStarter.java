@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -44,8 +46,8 @@ public class ServerStarter{
 		this.AllMovings_ = new ItemContainer();
 		players_ = new ArrayList<Tank>();
 		map = Main.readFile(new File("docs/map3.txt")) ;
-		int[][]m = null;
-		simulator_ = new ServerSimulator(m, players_  ); 
+//		int[][]m = null;
+		simulator_ = new ServerSimulator(map, players_  ); 
 	}
 	
 	public void startServer() {
@@ -110,10 +112,12 @@ public class ServerStarter{
 		
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException {
+	public static void main(String[] args) throws ClassNotFoundException, UnknownHostException {
 		
         int nofClients = 3;
 		ServerStarter ss = new ServerStarter(nofClients, 8189);
+		InetAddress localHostAddress = InetAddress.getLocalHost();
+		System.out.println( localHostAddress );
 		ss.startServer();
 		
 	}
@@ -177,7 +181,7 @@ class ClientListener implements Runnable{
 					float size = 5;
 
 					
-					tank.newBullets.add(new Bullet(xmain, ymain, dx,dy, size));
+					tank.newBullets.add(new Bullet(xmain, ymain, dx/10,dy/10, size));
 					
 				}
 			}

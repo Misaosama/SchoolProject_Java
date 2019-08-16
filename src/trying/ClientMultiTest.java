@@ -1,6 +1,8 @@
 package trying;
 
 import java.io.IOException;
+import java.util.Scanner;
+
 import Connect.ClientTCPConnection;
 import View.Box;
 import client.Models.Bullet;
@@ -32,7 +34,13 @@ public class ClientMultiTest {
 	
 	public static void main(String[] args) throws InterruptedException {
 		ClientMultiTest mf = new ClientMultiTest();	
-		ClientTCPConnection tcpC = new ClientTCPConnection("localhost");
+		String ip = "";
+		
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("enter ip:");
+		ip = scanner.next();
+		
+		ClientTCPConnection tcpC = new ClientTCPConnection(ip); //"localhost");
 		
 		try {
 			tcpC.connect();
@@ -224,6 +232,7 @@ public class ClientMultiTest {
 		
 
 		Display.destroy();
+		scanner.close();
 		System.exit(0);
 		
 	}
