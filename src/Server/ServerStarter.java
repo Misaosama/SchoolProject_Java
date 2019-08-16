@@ -14,6 +14,7 @@ import client.Models.Bullet;
 //import Connect.ServerTCPConnection;
 import client.Models.Item;
 import client.Models.ItemContainer;
+import client.Models.ServerSimulator;
 import client.Models.Tank;
 
 public class ServerStarter{
@@ -35,6 +36,7 @@ public class ServerStarter{
 	private ItemContainer AllMovings_;
 	private List<Tank> players_;
 	private int[][] map;
+	private ServerSimulator simulator_;
 	
 	public ServerStarter( int numberOfClients, int portNumber ) {
 		this.numberOfClients_ = numberOfClients;
@@ -42,7 +44,8 @@ public class ServerStarter{
 		this.AllMovings_ = new ItemContainer();
 		players_ = new ArrayList<Tank>();
 		map = Main.readFile(new File("docs/map3.txt")) ;
-		
+		int[][]m = null;
+		simulator_ = new ServerSimulator(m, players_  ); 
 	}
 	
 	public void startServer() {
@@ -75,7 +78,7 @@ public class ServerStarter{
 			try {
 				while(true) {
 					//simulate part.
-					
+					simulator_.update();
 					
 					//add all tanks and bullets
 					for( Tank player: this.players_) {
