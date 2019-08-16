@@ -3,7 +3,6 @@ package client.Models;
 import java.util.ArrayList;
 import java.util.List;
 
-import View.Box;
 
 public class ItemContainer implements java.io.Serializable {
 	public List<Item> items_;
