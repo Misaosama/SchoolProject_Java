@@ -25,12 +25,8 @@ public class MultiplayerClient {
 	private static final int DISPLAY_WIDTH = 900;
 	private static final int DISPLAY_HEIGTH = 600;
 	private static final int FRAMES_PER_SECOND = 30;
-	private static final int MAP_WIDTH = 1500;
-	private static final int MAP_HEIGTH = 900;
-	private static final int SPEED = 4;
 	
 	private static final int WALL_SIZE = 15;
-	private static final int TANK_SIZE = 15;
 	
 	private int portNum_;
 	private String ip_;
