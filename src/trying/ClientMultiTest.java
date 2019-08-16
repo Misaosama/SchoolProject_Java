@@ -24,8 +24,8 @@ import org.lwjgl.opengl.DisplayMode;
 
 
 public class ClientMultiTest {
-	private static final int DISPLAY_WIDTH = 1000;
-	private static final int DISPLAY_HEIGTH = 1000;
+	private static final int DISPLAY_WIDTH = 800;
+	private static final int DISPLAY_HEIGTH = 800;
 	private static final int FRAMES_PER_SECOND = 30;
 	private static final int MAP_WIDTH = 1500;
 	private static final int MAP_HEIGTH = 900;
