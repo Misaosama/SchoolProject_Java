@@ -65,6 +65,18 @@ public class MultiplayerClient {
 	 */
 	public void ClientStart() throws IOException {
 		ClientTCPConnection tcpC = new ClientTCPConnection(this.ip_, this.portNum_);
+		try {
+			Display.setDisplayMode(new DisplayMode(DISPLAY_WIDTH, DISPLAY_HEIGTH));
+			Display.setResizable(true);
+			Display.create();
+
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, DISPLAY_WIDTH, DISPLAY_HEIGTH, 0, 1, -1);
+		glMatrixMode(GL_MODELVIEW);
 		tcpC.connect();
 		//wait until server tells all clients connected:
 				System.out.println("Waiting other players...");
@@ -82,18 +94,18 @@ public class MultiplayerClient {
 				cThread.start();
 				
 				//GUI
-				try {
-					Display.setDisplayMode(new DisplayMode(DISPLAY_WIDTH, DISPLAY_HEIGTH));
-					Display.setResizable(true);
-					Display.create();
-
-				} catch (LWJGLException e) {
-					e.printStackTrace();
-				}
-				glMatrixMode(GL_PROJECTION);
-				glLoadIdentity();
-				glOrtho(0, DISPLAY_WIDTH, DISPLAY_HEIGTH, 0, 1, -1);
-				glMatrixMode(GL_MODELVIEW);
+//				try {
+//					Display.setDisplayMode(new DisplayMode(DISPLAY_WIDTH, DISPLAY_HEIGTH));
+//					Display.setResizable(true);
+//					Display.create();
+//
+//				} catch (LWJGLException e) {
+//					e.printStackTrace();
+//				}
+//				glMatrixMode(GL_PROJECTION);
+//				glLoadIdentity();
+//				glOrtho(0, DISPLAY_WIDTH, DISPLAY_HEIGTH, 0, 1, -1);
+//				glMatrixMode(GL_MODELVIEW);
 				
 				boolean up, left, right, down;
 				up =left = right = down = false;

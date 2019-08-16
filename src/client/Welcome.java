@@ -249,6 +249,14 @@ public class Welcome extends JFrame{
 	    	        				MultiplayerClient mc = new MultiplayerClient(new_port_num, ip);
 	    	        				try {
 	    								mc.ClientStart();
+	    								single_player_bu.setEnabled(true);
+	    				        		multi_player_bu.setEnabled(true);
+	    				        		exit_bu.setEnabled(true);
+	    				        		map_bu.setEnabled(true);
+	    				        		setting_bu.setEnabled(true);
+	    				        		help_bu.setEnabled(true);
+	    				        		exit_bu.setEnabled(true);
+	    				     
 	    							} catch (IOException e1 ) {
 	    								ok_bu.setEnabled(true);
 
@@ -264,6 +272,13 @@ public class Welcome extends JFrame{
 	    	        				dialog.setVisible(false);
 	        					}
 	        				});
+	        				single_player_bu.setEnabled(false);
+	                		multi_player_bu.setEnabled(false);
+	                		exit_bu.setEnabled(false);
+	                		map_bu.setEnabled(false);
+	                		setting_bu.setEnabled(false);
+	                		help_bu.setEnabled(false);
+	                		exit_bu.setEnabled(false);
 	        				t.start();
 	        				
 	        				
