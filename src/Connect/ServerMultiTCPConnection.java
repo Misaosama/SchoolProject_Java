@@ -6,7 +6,12 @@ import java.util.List;
 
 import client.Models.ItemContainer;
 
-
+/**
+ * 
+ * @author rongyi
+ * @version 1.0
+ *
+ */
 public class ServerMultiTCPConnection {
 	private int DEFAULT_PORT = 8188;
 	private ServerSocket serverSocket_;
