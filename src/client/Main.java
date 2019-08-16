@@ -285,6 +285,7 @@ public class Main {
 			while (Mouse.next()) {
 				
 				if (Mouse.getEventButtonState() && tank.box != null) {	
+					
 
 					float xmouse = Mouse.getX() + camera.x;
 					float ymouse = DISPLAY_HEIGTH - Mouse.getY() + camera.y;
@@ -299,6 +300,10 @@ public class Main {
 
 					
 					tank.newBullets.add(new Bullet(xmain, ymain, dx,dy, size));
+					if (Keyboard.getEventKey() == Keyboard.KEY_Q) {
+						tank.box.x = (int)xmouse;
+						tank.box.y = (int)ymouse;
+					}
 				}
 			}
 			
