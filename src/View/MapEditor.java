@@ -147,7 +147,7 @@ public class MapEditor extends JFrame {
      *
      */
     public void newGrid() {
-        String input_str=JOptionPane.showInputDialog(MapEditor.this,"please type in new row and col(3~10), "
+        String input_str=JOptionPane.showInputDialog(MapEditor.this,"please type in new row and col, "
                                                      + "seperate by space","new map",JOptionPane.PLAIN_MESSAGE);
         boolean end = false;
         if (input_str!=null) {
@@ -603,7 +603,9 @@ public class MapEditor extends JFrame {
     }
     
     /**
-     * construct the main MapEditor
+     * constructor for the MapEditor
+     * construct a map editor as well as setting up the GUI and buttons
+     * 
      */
     public MapEditor(){
         super("MapEditor");
@@ -645,7 +647,6 @@ public class MapEditor extends JFrame {
         exit_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //System.exit(0);
             	MapEditor.this.setVisible(false);
             }
         });
@@ -723,28 +724,6 @@ public class MapEditor extends JFrame {
         control_center.add(notes5);
         control_center.add(notes6);
         
-        //apply button
-        
-        JButton apply_button = new JButton("apply changes");
-        apply_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)  {
-                createNewGrid();
-                for (int i=0;i<ROW;i++) {
-                    for(int j =0; j < COL; j++) {
-                        GRID[i][j] = USERGRID[i][j];
-                    }
-                }
-                loadGrid();
-            }
-        });
-        apply_button.setFont(new java.awt.Font("Dialog", 1, 22));
-        bot_panel.add(apply_button);
-       
-        //bot panel
-        JLabel bot_message = new JLabel("***click apply to apply the changes made in the map***");
-        bot_panel.add(bot_message);
-        
         //menu
         JMenuBar menubar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
@@ -787,6 +766,11 @@ public class MapEditor extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
+    /**
+     * main function for the MapEditor
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         MapEditor gui = new MapEditor();
         gui.setVisible(true);
