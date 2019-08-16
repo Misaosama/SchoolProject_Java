@@ -62,10 +62,12 @@ public class ServerStarter{
 			
 			//Generate tanks
 			for ( int i = 0 ; i < numberOfClients_; i++) {
-//				Item thisItem = new Item( (float)30.0*i, (float)30.0*i, (float)100.0, (float)100.0, 0, 0);
-				Tank tank =	new Tank(3*WALL_SIZE,WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
-//				Item thisItem = tank.box;
-//				this.AllMovings_.addItem(thisItem);
+				if( i == 1) {
+					Tank tank = new Tank(8*WALL_SIZE,8*WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
+					this.players_.add(tank);
+					continue;
+				}
+				Tank tank =	new Tank(4*WALL_SIZE,4*WALL_SIZE,TANK_SIZE,TANK_SIZE,true,SPEED);
 				this.players_.add(tank);
 			}
 			
