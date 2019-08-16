@@ -25,6 +25,12 @@ public class ServerMultiTCPConnection {
 	private boolean myTurn_;
 	private boolean ready_;
 	
+	/**
+	 * 
+	 * @param numberOfClientsWanted the number of players in this game.
+	 * @param portNumber
+	 * @throws IOException
+	 */
 	public ServerMultiTCPConnection( int numberOfClientsWanted, int portNumber ) throws IOException {
 		this.DEFAULT_PORT = portNumber;
 		this.numberOfClientsWanted_ = numberOfClientsWanted;
