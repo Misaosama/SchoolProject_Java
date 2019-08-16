@@ -11,7 +11,12 @@ import javax.swing.*;
 
 import javax.swing.border.*;
 
-
+/**
+ * The mapeditor is a GUI for user to edit a map or create a new map for single player mode game.
+ * User can click on the grid button to set a grid button to be a wall, an item or enemy.
+ * @author Minghao Zhu
+ *
+ */
 public class MapEditor extends JFrame {
     /**
      * MapEditor is a Gui to help editing maps

@@ -9,7 +9,9 @@ import javax.swing.*;
 import View.MapEditor;
 
 /**
- * 
+ * Welcome is the main GUIinterface user will see in the first place
+ * It contains button jumping to single player mode game, multiplayer mode game,
+ * the map editor, the help sessage, the settings and the exit button
  * @author Minghao Zhu
  *
  */
