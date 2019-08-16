@@ -227,7 +227,6 @@ public class Welcome extends JFrame{
 	            ok_bu.addActionListener(new ActionListener() {
 	                @Override
 	                public void actionPerformed(ActionEvent e) {
-	                	//TODO: jump to multiplayer mode
 	                	String ip = ip_entry.getText();
 	                	String port = port_entry.getText();
 	                	int port_num = 0;
@@ -241,13 +240,33 @@ public class Welcome extends JFrame{
 	                	
 	        			if(good_input && port_num!=0){
 	        				//Start multiplayer game
-	        				//ip, port_num
+	        				
+	        				//TODO
+	        				final int new_port_num=port_num;
+	        				Thread t = new Thread(new Runnable() {
+	        					public void run() {
+	    	        				MultiplayerClient mc = new MultiplayerClient(new_port_num, ip);
+	    	        				try {
+	    								mc.ClientStart();
+	    							} catch (IOException e1 ) {
+	    		        				JOptionPane.showMessageDialog(null, "cannot connect to server, try again");
+	    		        				ip_entry.setText(""); 
+	    		        				port_entry.setText("");
+	    							}catch(java.lang.IllegalArgumentException ae) {
+	    								JOptionPane.showMessageDialog(null, "cannot connect to server, try again");
+	    		        				ip_entry.setText(""); 
+	    		        				port_entry.setText("");
+	    							}
+	        					}
+	        				});
+	        				t.start();
+	        				
+	        				
+	        				/*
 	        				MultiplayerClient mc = new MultiplayerClient(port_num, ip);
 	        				try {
 								mc.ClientStart();
 							} catch (IOException e1 ) {
-								// TODO Auto-generated catch block
-//								e1.printStackTrace();
 		        				JOptionPane.showMessageDialog(null, "cannot connect to server, try again");
 		        				ip_entry.setText(""); 
 		        				port_entry.setText("");
@@ -256,6 +275,7 @@ public class Welcome extends JFrame{
 		        				ip_entry.setText(""); 
 		        				port_entry.setText("");
 							}
+							*/
 	        				
 	        			}else {
 	        				JOptionPane.showMessageDialog(null, "invalid entry, try again");
