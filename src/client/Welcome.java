@@ -207,7 +207,7 @@ public class Welcome extends JFrame{
 	        //jump to multi-player game when onclick
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	final JDialog dialog = new JDialog(Welcome.this, "Connect to server", true);
+	        	JDialog dialog = new JDialog(Welcome.this, "Connect to server", true);
 	            dialog.setSize(300, 200);
 	            dialog.setResizable(false);
 	            dialog.setLocationRelativeTo(Welcome.this);
@@ -240,8 +240,9 @@ public class Welcome extends JFrame{
 	                	
 	        			if(good_input && port_num!=0){
 	        				//Start multiplayer game
+	        				JOptionPane.showMessageDialog(null, "waiting for connection...");
+	        				ok_bu.setEnabled(false);
 	        				
-	        				//TODO
 	        				final int new_port_num=port_num;
 	        				Thread t = new Thread(new Runnable() {
 	        					public void run() {
@@ -249,14 +250,18 @@ public class Welcome extends JFrame{
 	    	        				try {
 	    								mc.ClientStart();
 	    							} catch (IOException e1 ) {
+	    								ok_bu.setEnabled(true);
+
 	    		        				JOptionPane.showMessageDialog(null, "cannot connect to server, try again");
 	    		        				ip_entry.setText(""); 
 	    		        				port_entry.setText("");
 	    							}catch(java.lang.IllegalArgumentException ae) {
+	    								ok_bu.setEnabled(true);
 	    								JOptionPane.showMessageDialog(null, "cannot connect to server, try again");
 	    		        				ip_entry.setText(""); 
 	    		        				port_entry.setText("");
 	    							}
+	    	        				dialog.setVisible(false);
 	        					}
 	        				});
 	        				t.start();
