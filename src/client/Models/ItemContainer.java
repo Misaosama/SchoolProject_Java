@@ -26,14 +26,5 @@ public class ItemContainer implements java.io.Serializable {
 		return this.items_.get(i); 
 	}
 	
-//	public void becomeThisBC( ItemContainer bc ) {
-//		this.items_.clear();
-//		
-//		for( Tank item : bc.items_) {
-//			this.items_.add(item);
-//		}
-//		this.nofItems_ = bc.nofItems_;
-//		
-//	}
 	
 }

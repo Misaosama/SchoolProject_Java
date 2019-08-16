@@ -64,7 +64,6 @@ public class MultiplayerClient {
 				try {
 					ID = tcpC.receiveID();
 				} catch (ClassNotFoundException | IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				System.out.println("Receive id as: " + ID);
@@ -72,8 +71,6 @@ public class MultiplayerClient {
 				ClientTCPConnectionHandler ch = new ClientTCPConnectionHandler(tcpC, this.clientMovings_, this );
 				Thread cThread = new Thread(ch);
 				cThread.start();
-				
-//				cThread.join();
 				
 				//GUI
 				try {
@@ -93,13 +90,7 @@ public class MultiplayerClient {
 				up =left = right = down = false;
 				
 				while (!Display.isCloseRequested()) {
-
-//					if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-//						break;
-//					}
 					glClear(GL_COLOR_BUFFER_BIT);//GL_COLOR_BUFFER_BIT: import static org.lwjgl.opengl.GL11.*;
-					
-//					glTranslatef(-camera.xmov, -camera.ymov, 0);
 					glTranslatef(0, 0, 0);
 					
 					this.render();
@@ -174,7 +165,6 @@ public class MultiplayerClient {
 							tcpC.send(4);
 						}
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					Display.update();
@@ -232,18 +222,14 @@ class ClientTCPConnectionHandler implements Runnable{
 		try {
 			while(true) {
 				ItemContainer receivedMovings = this.connection_.receive();
-				this.cmt_.clientMovings_ = receivedMovings;
-//				System.out.println(receivedMovings.nofBoxes_);
-				
+				this.cmt_.clientMovings_ = receivedMovings;			
 			}
-			
-			
+				
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
 		
 	}
 	
