@@ -20,20 +20,29 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-
+/**
+ * This class is responsible to get data(moving object's position, etc.) from the server 
+ * and keep displaying all objects in this game. 
+ * @author rongyi
+ * @version 1.0
+ *
+ */
 public class MultiplayerClient {
 	private static final int DISPLAY_WIDTH = 900;
 	private static final int DISPLAY_HEIGTH = 600;
 	private static final int FRAMES_PER_SECOND = 30;
-	
 	private static final int WALL_SIZE = 15;
-	
 	private int portNum_;
 	private String ip_;
 	private List<Item> walls;
 	private int[][] map;
 	protected ItemContainer clientMovings_;
 	
+	/**
+	 * 
+	 * @param port_num : the server's port number it wants to connect to
+	 * @param ip : the ip address of the server. Can be "localhost".
+	 */
 	public MultiplayerClient( int port_num, String ip ) {
 		this.portNum_ = port_num;
 		this.ip_ = ip;
@@ -50,6 +59,10 @@ public class MultiplayerClient {
 		}
 	}
 	
+	/**
+	 * Start the display and start getting data from the server. 
+	 * @throws IOException
+	 */
 	public void ClientStart() throws IOException {
 		ClientTCPConnection tcpC = new ClientTCPConnection(this.ip_, this.portNum_);
 		tcpC.connect();
@@ -171,7 +184,9 @@ public class MultiplayerClient {
 		
 	}
 	
-	
+	/**
+	 * The helper function used to display everything in this game.
+	 */
 	private void render() {
 		
 		synchronized(this.clientMovings_) {
@@ -187,6 +202,10 @@ public class MultiplayerClient {
 		
 	}
 	
+	/**
+	 * Display an item.
+	 * @param box an item to be displayered, everything is displayed as an item type. 
+	 */
 	private void drawObject(Item box) {
 		glColor3f(box.c1, box.c2, box.c3);
 		glBegin(GL_QUADS);
@@ -199,6 +218,13 @@ public class MultiplayerClient {
 	
 }
 
+/**
+ * 
+ * This class is used for multithreading, it keeps receiving data from the server.
+ * @author rongyi
+ * @version 1.0
+ *
+ */
 class ClientTCPConnectionHandler implements Runnable{
 	
 	private ClientTCPConnection connection_;
@@ -212,6 +238,9 @@ class ClientTCPConnectionHandler implements Runnable{
 		this.cmt_ = cmt;
 	}
 	
+	/**
+	 * Override function.
+	 */
 	@Override
 	public void run() {
 		
