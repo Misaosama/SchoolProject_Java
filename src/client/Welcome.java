@@ -4,53 +4,77 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.text.Collator;
-
 import javax.swing.*;
 
 import View.MapEditor;
 
-
+/**
+ * 
+ * @author Minghao Zhu
+ *
+ */
 public class Welcome extends JFrame{
 
 
 	/**
-	 * 
+	 * generated serial version
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/** a main container*/
     public Container content_pane;
     
+    /** JPanel title on top of gui**/
     public JPanel title;
+    /** JLabel title_label showing the title**/
     public JLabel title_label;
+    /** JPanel holding buttons**/
     public JPanel buttons;
+    /** JPanel top panel for top button **/
     public JPanel top_panel;
+    /** JPanel bot panel for bot button **/
     public JPanel bot_panel;
     
-    
+    /** image icon for title**/
     public ImageIcon title_img;
+    /** image icon for single player mode**/
     public ImageIcon single_img;
+    /** image icon for mutliplayer mode**/
     public ImageIcon multi_img;
+    /** image icon for settings**/
     public ImageIcon setting_img;
+    /** image icon for settings2**/
     public ImageIcon setting_img2;
+    /** image icon for help**/
     public ImageIcon help_img;
+    /** image icon for exit**/
     public ImageIcon exit_img;
+    /** image icon for space**/
     public ImageIcon space_img;
+    /** image icon for map**/
     public ImageIcon map_img;
 
-    
+    /** single player mode button**/
     public JButton single_player_bu;
+    /** multi player mode button**/
     public JButton multi_player_bu;
+    /** settings button**/
     public JButton setting_bu;
+    /** help button**/
     public JButton help_bu;
+    /** exit button**/
     public JButton exit_bu;
+    /** map editor button**/
     public JButton map_bu;
-    
+    /** UIColor**/
     public Color UICOLOR;
-    
+    /** a file holding map path for single player mode**/
     public File Map = new File("docs/map2.txt");
     
+    /**
+     * constructor for Welcome
+     * Construct all components of welcome board
+     */
 	public Welcome() {
 		content_pane = this.getContentPane();
 		title = new JPanel();
@@ -79,10 +103,12 @@ public class Welcome extends JFrame{
 		title_label = new JLabel();
 		
 		UICOLOR = new Color(29, 62, 66);
-		
-		
+				
 	}
 	
+	/**
+	 * a function to set up GUI 
+	 */
 	public void setUpGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -130,9 +156,10 @@ public class Welcome extends JFrame{
     	
 	}
 	
-
+	/**
+	 * a function to set up onclick listener for all buttons
+	 */
 	public void setUpButton() {
-		
 		
 		//single player button
 		single_img.setImage(single_img.getImage().getScaledInstance(400, 120,Image.SCALE_DEFAULT ));
@@ -150,7 +177,7 @@ public class Welcome extends JFrame{
         		help_bu.setEnabled(false);
         		exit_bu.setEnabled(false);
         		
-        		
+        		// a new thread to run the game
 				Thread t = new Thread(new Runnable() {
 					public void run() {
 		        		Main main = new Main(Map);	
@@ -165,9 +192,6 @@ public class Welcome extends JFrame{
 				});
 				t.start();
    
-
-
-        		
             }
 		});
 		
@@ -178,7 +202,67 @@ public class Welcome extends JFrame{
 	        //jump to multi-player game when onclick
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	//TODO: add jump to multi-player
+	        	final JDialog dialog = new JDialog(Welcome.this, "Connect to server", true);
+	            dialog.setSize(300, 200);
+	            dialog.setResizable(false);
+	            dialog.setLocationRelativeTo(Welcome.this);
+	            
+	            JPanel multi_panel = new JPanel();
+	    		multi_panel.setLayout(new GridLayout(3,2));
+	    		
+	        	JLabel ip_address = new JLabel("ip address：");
+	        	JLabel port_num = new JLabel("port："); 
+	        	JTextField ip_entry = new JTextField(10);
+	        	JTextField port_entry = new JTextField(10);
+	        	
+	    		ip_address.setHorizontalAlignment(SwingConstants.RIGHT);
+	    		port_num.setHorizontalAlignment(SwingConstants.RIGHT);
+	    		
+	            JButton ok_bu = new JButton("ok");
+	            ok_bu.addActionListener(new ActionListener() {
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                	//TODO: jump to multiplayer mode
+	                	String ip = ip_entry.getText();
+	                	String port = port_entry.getText();
+	                	int port_num = 0;
+	                	boolean good_input = true;
+	                	try{
+	                		port_num = Integer.valueOf(port);
+	                		System.out.println(port_num);
+	                	}catch(Exception ex) {
+	                		good_input = false;
+	                	}
+	                	
+	        			if(good_input && port_num!=0){
+	        				//Start multiplayer game
+	        			}else {
+	        				JOptionPane.showMessageDialog(null, "invalid entry, try again");
+	        				ip_entry.setText(""); 
+	        				port_entry.setText("");
+	        			}
+
+	                }
+	            });
+	            
+	            JButton cancel_bu = new JButton("cancel");
+	            cancel_bu.addActionListener(new ActionListener() {
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                    dialog.dispose();
+	                }
+	            });
+	            
+	            multi_panel.add(ip_address);
+	            multi_panel.add(ip_entry);  
+	            multi_panel.add(port_num);
+	            multi_panel.add(port_entry);  
+	            multi_panel.add(cancel_bu);
+	            multi_panel.add(ok_bu);
+	            
+	            dialog.add(multi_panel, BorderLayout.CENTER);
+	            dialog.setContentPane(multi_panel);
+	            dialog.setVisible(true);
 	        }
 		});
 		
@@ -279,7 +363,6 @@ public class Welcome extends JFrame{
 	        }
 		});
 		
-		
 		map_img.setImage(map_img.getImage().getScaledInstance(200, 80,Image.SCALE_DEFAULT ));
 		map_bu.setIcon(map_img);
 		map_bu.addActionListener(new ActionListener() {
@@ -294,8 +377,7 @@ public class Welcome extends JFrame{
         		setting_bu.setEnabled(false);
         		help_bu.setEnabled(false);
         		exit_bu.setEnabled(false);
-        		
-        		
+        		//run the map editor in a new thread	
 				Thread t = new Thread(new Runnable() {
 					public void run() {
 				        MapEditor gui2 = new MapEditor();
@@ -310,14 +392,15 @@ public class Welcome extends JFrame{
 				});
 				t.start();
 
-
-        		
             }
 		});
 		
 	}
 	
-	
+	/**
+	 * the main function
+	 * @param args commandline args
+	 */
 	public static void main(String[] args) {
 		Welcome gui = new Welcome();
         gui.setVisible(true);
