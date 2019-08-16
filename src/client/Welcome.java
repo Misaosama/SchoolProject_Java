@@ -181,6 +181,7 @@ public class Welcome extends JFrame{
         		help_bu.setEnabled(false);
         		exit_bu.setEnabled(false);
         		
+        		JOptionPane.showMessageDialog(null, "QUEST: Kill all enemies and find the way of the maze!");
         		// a new thread to run the game
 				Thread t = new Thread(new Runnable() {
 					public void run() {
