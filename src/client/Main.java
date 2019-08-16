@@ -300,9 +300,12 @@ public class Main {
 
 					
 					tank.newBullets.add(new Bullet(xmain, ymain, dx,dy, size));
-					if (Keyboard.getEventKey() == Keyboard.KEY_Q) {
+					if (Keyboard.getEventKey() == Keyboard.KEY_Q && tank.canFlash ) {
 						tank.box.x = (int)xmouse;
 						tank.box.y = (int)ymouse;
+						tank.canFlash = false;
+						sim.flash();
+						
 					}
 				}
 			}
@@ -358,6 +361,13 @@ public class Main {
 							tank.dx = 0;
 						}
 					}
+				}
+				if (Keyboard.getEventKey() == Keyboard.KEY_R) {
+					sim.stopTime();
+				}
+				if (Keyboard.getEventKey() == Keyboard.KEY_E && tank.canHeal) {
+					tank.health = tank.maxHealth;
+					tank.canHeal = false;
 				}
 			}
 		} else {

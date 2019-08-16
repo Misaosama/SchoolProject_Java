@@ -19,13 +19,17 @@ public class Tank extends movingBox implements java.io.Serializable {
 	public int size;
 	public int speed;
 	
+	
 	public ArrayList<Bullet> newBullets;
 	public movingItem box;
 	
 	private File file;
 	private BufferedImage img;
-	private int maxHealth;
+	public int maxHealth;
 	public int r,c;
+	
+	public boolean canFlash = true;
+	public boolean canHeal = true;
 	
 	public Tank(float x, float y, int size, int health, boolean whichImage, int speed) {
 		super(x,y);
