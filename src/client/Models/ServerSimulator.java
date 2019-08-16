@@ -11,6 +11,11 @@ public class ServerSimulator {
 	private int[][] map;
 	private ArrayList<Tank> tanks;
 	
+	private static final int MAP_WIDTH = 2000;
+	private static final int MAP_HEIGTH = 2000;
+	private static final int WALL_SIZE = 20;
+	
+	
 	public ServerSimulator(int[][] m, ArrayList<Tank> t) {
 		map = m;
 		tanks = t;
