@@ -51,7 +51,8 @@ public class ServerStarter{
 		players_ = new ArrayList<Tank>();
 		map = Main.readFile(new File("docs/map3.txt")) ;
 //		int[][]m = null;
-		simulator_ = new ServerSimulator(map, players_  ); 
+		simulator_ = new ServerSimulator(map, players_  );
+		System.out.println("Port Number: " + this.portNumber_);
 	}
 	
 	/**
@@ -138,6 +139,7 @@ public class ServerStarter{
 		ServerStarter ss = new ServerStarter(nofClients, 8189);
 		InetAddress localHostAddress = InetAddress.getLocalHost();
 		System.out.println( localHostAddress );
+//		System.out.println(  )
 		ss.startServer();
 		
 	}
@@ -179,7 +181,7 @@ class ClientListener implements Runnable{
 		try {
 			while(true) {
 				int clientResponse = this.input_.readInt();
-				System.out.println(String.format("%d Received %d", this.clientIndex_,clientResponse));
+//				System.out.println(String.format("%d Received %d", this.clientIndex_,clientResponse));
 				if( clientResponse == 1 ) {
 //					synchronized(allMovings_) {
 						this.tanks_.get(clientIndex_).dy += 4.0;
