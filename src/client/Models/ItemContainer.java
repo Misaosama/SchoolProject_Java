@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import View.Box;
-import trying.BoxContainer;
 
 public class ItemContainer implements java.io.Serializable {
 	public List<Item> items_;
