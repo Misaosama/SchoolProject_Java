@@ -17,7 +17,7 @@ public class ServerSimulator {
 	private static final int WALL_SIZE = 20;
 	
 	
-	public ServerSimulator(int[][] m, ArrayList<Tank> t) {
+	public ServerSimulator(int[][] m, List<Tank> t) {
 		map = m;
 		tanks = t;
 		MAP_WIDTH = map[0].length*WALL_SIZE;
