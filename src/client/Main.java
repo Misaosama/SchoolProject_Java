@@ -28,6 +28,12 @@ import client.Models.Item;
 import client.Models.ItemFactory;
 import client.Models.Simulator;
 
+/**
+ * 
+ * @author formycat
+ * Single player mode class
+ *
+ */
 public class Main {
 	private static final int DISPLAY_WIDTH = 700;
 	private static final int DISPLAY_HEIGTH = 500;
@@ -69,11 +75,18 @@ public class Main {
 
 	}
 
+	/**
+	 * constructor
+	 * @param f the file which stores the map
+	 */
 	public Main(File f){
 		map = readFile(f) ;
 		generateItems();
 	}
 	
+	/**
+	 * allow other class to Start the game
+	 */
 	public void StartGame() {
 		initOpenGl();
 		init();
@@ -81,7 +94,9 @@ public class Main {
 		
 	}
 	
-	// use this function to create the walls
+	/**
+	 * Generate items
+	 */
 	private void generateItems() {
 		
 
@@ -125,7 +140,9 @@ public class Main {
     
 	
 	
-	/** Initializing OpenGL functions */
+	/**
+	 * Initializes openGL
+	 */
 	private void initOpenGl() {
 
 		try {
@@ -151,7 +168,9 @@ public class Main {
 		
 	}
 	
-	/** Setting up screen, establishing connections (TCP, UPD) with server, etc. */
+	/**
+	 * init private variables
+	 */
 	private void init() {
 
 //		connections = new TcpConnection(this, server_ip, server_port_tcp);
@@ -171,7 +190,10 @@ public class Main {
 //		new Thread(new UdpConnection(this, connections, client_port_udp)).start();
 	}
 	
-	/** Game loop */
+	/**
+	 * start game loop
+	 * will break when the player wins or close the frame
+	 */
 	private void start() {
 
 		while (!Display.isCloseRequested()) {
@@ -201,7 +223,9 @@ public class Main {
 	}
 	
 	
-	/** Updating camera's position */
+	/**
+	 * Updating camera's position 
+	 */
 	private void update() {
 
 		if (tank.box != null) {
@@ -242,6 +266,11 @@ public class Main {
 		
 	}
 	
+	/**
+	 * draw the item with texture
+	 * @param item item to draw
+	 * @param tex texture of that item
+	 */
 	public void drawTexture(Item item, Texture tex) {
 		if(tex == null) {
 			drawItem(item);
@@ -261,6 +290,10 @@ public class Main {
 		glEnd();
 	}
 	
+	/**
+	 * draw the item 
+	 * @param wall the item
+	 */
 	public void drawItem(Item wall) {
 		glColor3f(wall.c1, wall.c2, wall.c3);
 		glBegin(GL_QUADS);
@@ -276,6 +309,12 @@ public class Main {
 	private boolean right = false;
 	private boolean left = false;
 
+	/**
+	 * handle the event
+	 * Q: flash
+	 * R: the world
+	 * E: Heal
+	 */
 	private void handlingEvents() {
 
 		if (Display.isActive()) { // if display is focused events are handled
@@ -397,7 +436,11 @@ public class Main {
 			xmov = 0;
 			ymov = 0;
 		}
-
+		
+		/**
+		 * update the camera
+		 * @param character the tank
+		 */
 		private void update(Item character) {
 
 			float xnew = character.x, ynew = character.y;
@@ -415,7 +458,11 @@ public class Main {
 	}
 	
 	
-	
+	/**
+	 * Get the texture
+	 * @param file file which stores the texture
+	 * @return the texture
+	 */
 	private Texture getTexture(String file) {
 		Texture texture;
 		try {

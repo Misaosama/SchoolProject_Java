@@ -20,6 +20,9 @@ class Helper extends TimerTask
     public int TimerCount ; 
     
 
+    /**
+     * constructor 
+     */
     public Helper() {
     	TimerCount = 0;
     }
@@ -42,15 +45,28 @@ class Helper extends TimerTask
     }
 } 
 
+/**
+ * useless class
+ * @author formycat
+ *
+ */
 class theWorld implements Runnable{
 	private Helper timetask;
 	private Timer time;
 	
+	/**
+	 * useless constructor
+	 * @param t timer
+	 * @param ti timetask
+	 */
 	public theWorld(Helper t, Timer ti) {
 		timetask = t;
 		time = ti;
 	}
 
+	/**
+	 * run
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -68,6 +84,12 @@ class theWorld implements Runnable{
 	
 }
 
+/**
+ * 
+ * @author formycat
+ * Simulator will simulate all moving 
+ *
+ */
 public class Simulator {
 	
 	private static final int MAP_WIDTH = 2000;
@@ -86,6 +108,14 @@ public class Simulator {
 	
 	private theWorld w;
 	
+	/**
+	 * constructor
+	 * @param t the player tank
+	 * @param m map
+	 * @param b bullets
+	 * @param k kits
+	 * @param e enemies
+	 */
 	public Simulator(Tank t, int[][] m, 
 			ArrayList<Bullet> b, ArrayList<Item> k, ArrayList<Tank> e ) {
 		tank = t;
@@ -101,10 +131,16 @@ public class Simulator {
 		timer.schedule(timertask, 0, 30);
 	}
 	
+	/**
+	 * stop time for 5 sec
+	 */
 	public void stopTime() {
-		timertask.setCount(-300);
+		timertask.setCount(-150);
 	}
 	
+	/**
+	 * make sure flash will not end in the wall
+	 */
 	public void flash() {
 		int row = (int)(tank.box.y)/WALL_SIZE;
 		int col = (int)(tank.box.x)/WALL_SIZE;
@@ -121,10 +157,18 @@ public class Simulator {
 		}
 	}
 	
+	/**
+	 * quest
+	 * @return true if finish quest
+	 */
 	public boolean quest() {
 		return enemies.isEmpty();
 	}
 	
+	/**
+	 * update everything
+	 * @return true if the player reach the destination
+	 */
 	public boolean update() {
 		tank.box.x += tank.dx;
 		tank.box.y += tank.dy;
