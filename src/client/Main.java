@@ -29,9 +29,9 @@ import client.Models.ItemFactory;
 import client.Models.Simulator;
 
 /**
- * 
- * @author formycat
  * Single player mode class
+ * @author formycat
+ * 
  *
  */
 public class Main {

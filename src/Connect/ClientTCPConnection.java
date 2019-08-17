@@ -11,11 +11,10 @@ import client.Models.Tank;
 //import java.nio.charset.*;
 
 /**
- * 
- * @author Rongyi Zhang
- * @version 1.0
  * The class is responsible for setting up socket to communicate with server, if the local
  * is in client mode.
+ * @author Rongyi Zhang
+ * @version 1.0
  *
  */
 public class ClientTCPConnection {

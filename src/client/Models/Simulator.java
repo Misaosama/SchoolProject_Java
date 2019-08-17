@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * TimerTask class
  * @author wangj
+ * @version 1.0
  *
  */
 class Helper extends TimerTask 
@@ -85,9 +86,8 @@ class theWorld implements Runnable{
 }
 
 /**
- * 
- * @author formycat
  * Simulator will simulate all moving 
+ * @author formycat
  *
  */
 public class Simulator {

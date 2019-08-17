@@ -5,11 +5,11 @@ import java.util.List;
 
 
 /**
- * 
+ *This class groups together all moving objects(item objects) from the multi-player mode,
+ * and gets sent to clients from the server.
  * @author rongyi
  * @version 1.0
- * This class groups together all moving objects(item objects) from the multi-player mode,
- * and gets sent to clients from the server.
+ * 
  *
  */
 public class ItemContainer implements java.io.Serializable {
